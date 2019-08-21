@@ -1,0 +1,31 @@
+.folder {
+    color: green;
+}
+
+.notes {
+    font-size: 10px;
+    margin: 10px;
+}
+
+.notesList {
+    margin: 15px;
+}
+
+.noteContainer {
+    border: 1px solid black;
+    width: 400px;
+    display: flex;
+    padding: 15px;
+    margin: auto;
+}
+
+.noteInfo {
+    margin-right: 0;
+    text-align: left;
+    width: fit-content;
+}
+
+.deleteButton {
+    height: 30px;
+    margin: auto;
+}
