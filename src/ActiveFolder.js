@@ -1,18 +1,17 @@
 import React from 'react'
-import {Route, Link} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import dummyStore from './dummy-store'
+import './app.css'
 
 export default function ActiveFolder(props) {
-  console.log(props)
   const folder = dummyStore.notes.filter(p =>
     p.folderId === props.match.params.folderId
   )
   let display=folder.map(item=>{
-      return <Link to={`/notes/${item.id}`}><section key={item.id} className="note"><div className="noteInfo"><h2>{item.name}</h2><p className="noteDate">{item.modified}</p></div><button className="deleteButton">Delete Note</button></section></Link>
+      return <Link to={`/notes/${item.id}`}><li key={item.id} className="note"><div className="noteInfo"><h2>{item.name}</h2><p className="noteDate">{item.modified}</p></div><button className="deleteButton">Delete Note</button></li></Link>
   })
-  console.log(folder);
   return (
-    <article className='folderContents'>
+    <div className='activeFolderContainer'>
     <ul className='folderList'>
         {dummyStore.folders.map((folder,idx) =>
           <li key={folder.id}>
@@ -21,8 +20,10 @@ export default function ActiveFolder(props) {
             </Link>
           </li>
         )}
+        </ul>
+      <ul class="notesList">
+        {display}
       </ul>
-      {display}
-    </article>
+    </div>
   )
 }

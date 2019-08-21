@@ -16,8 +16,6 @@ class App extends React.Component {
       component={ListPage}/>
       <Route path='/folder/:folderId' component={ActiveFolder}/>
       <Route path='/notes/:notesId' component={Note}/>
-      
-      
     </main>
     </div>
   );
