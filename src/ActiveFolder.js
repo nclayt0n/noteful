@@ -21,7 +21,7 @@ export default function ActiveFolder(props) {
           </li>
         )}
         </ul>
-      <ul class="notesList">
+      <ul className="notesList">
         {display}
       </ul>
     </div>

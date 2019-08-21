@@ -4,6 +4,7 @@ import {Route, Link} from 'react-router-dom'
 import ListPage from './ListPage'
 import ActiveFolder from './ActiveFolder'
 import Note from './Note'
+import FolderForm from './FolderForm'
 class App extends React.Component {
   render(){
   return (
@@ -16,6 +17,7 @@ class App extends React.Component {
       component={ListPage}/>
       <Route path='/folder/:folderId' component={ActiveFolder}/>
       <Route path='/notes/:notesId' component={Note}/>
+      <Route path='/folderForm' component={FolderForm}/>
     </main>
     </div>
   );
