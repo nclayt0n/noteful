@@ -1,22 +1,44 @@
-.folder {
-    color: green;
+main {
+    display: flex;
 }
 
-.notes {
+h1 {
+    text-align: center;
+}
+
+.folders {
+    flex: 1;
+}
+
+.folder {
+    color: green;
+    border: 1px solid black;
+    padding: 15px;
+    width: 100px;
+    text-align: center;
+}
+
+.active {
     font-size: 10px;
     margin: 10px;
 }
 
-.notesList {
-    margin: 15px;
+.inactive {
+    display: none;
 }
 
-.noteContainer {
+.notesList {
+    margin: 0 0 0 15px;
+    flex: 4;
+}
+
+.note {
     border: 1px solid black;
     width: 400px;
     display: flex;
     padding: 15px;
     margin: auto;
+    margin-bottom: 5px;
 }
 
 .noteInfo {

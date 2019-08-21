@@ -1,14 +1,15 @@
 import React from 'react'
-import {Route, Link} from 'react-router-dom';
-export default class Folder extends React.Component{
+import dummyStore from './dummy-store';
+import './app.css'
+export default class Nav extends React.Component{
     render(){
-        return(
-        <div>
-         <div>Folder 1</div>
-         <div>Folder 1</div>
-         <div>Folder 1</div>  
-         
-         <Link to='/FolderForm'>Add Folder</Link> 
+        let folders=dummyStore.folders.map((folder,idx)=>{
+            return<div className="folder" key={folder.id}>folder {idx+1}</div>
+        })
+        console.log(folders)
+        console.log(dummyStore)
+        return(<div className="folders">
+        {folders}
         </div>)
     }
 }
