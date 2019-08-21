@@ -1,8 +1,9 @@
 import React from 'react';
 import {Route, Link} from 'react-router-dom'
-import Folder from './Folder'
-import Notes from './Notes'
-import NotesContainer from './NotesContainer';
+
+import ListPage from './ListPage'
+import ActiveFolder from './ActiveFolder'
+import Note from './Note'
 class App extends React.Component {
   render(){
   return (
@@ -11,9 +12,12 @@ class App extends React.Component {
       <h1>Noteful</h1>
     </Link>
     <main>
-      <Folder/>
-      <NotesContainer/>
-      <Notes/>
+      <Route exact path='/'
+      component={ListPage}/>
+      <Route path='/folder/:folderId' component={ActiveFolder}/>
+      <Route path='/notes/:notesId' component={Note}/>
+      
+      
     </main>
     </div>
   );
