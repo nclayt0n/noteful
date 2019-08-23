@@ -11,29 +11,38 @@ function folderName(idNum){
     if(idNum===dummyStore.folders[i].id){
       results= `Folder ${i+1}: ${dummyStore.folders[i].name}`
     }
-  return results;
   }
+  return results;
 }
-function NoteList(props) {
-  const note= dummyStore.notes.filter(p =>
-    p.id === props.match.params.notesId
-  )
-  let display=note.map(item=>{
-    let folder=folderName(item.folderId)
-    console.log(item.folderId);
-      return  <section key={item.id} className="singleNote">
-      <Link to={`/folder/${item.folderId}`}>GO BACK</Link>
-      <div className="singleFolder">{folder}</div>
-        <h2>{item.name}</h2>
-        <p>{item.content}</p>
-      </section>
-  });
-  console.log(props)
+
+class NoteList extends React.Component {
+  constructor(props){
+  super(props)
+  }
+  handleGoBack=()=>{
+    this.props.history.goBack();
+  }
+  
+  render(){
+  
+
+  const note= dummyStore.notes.find(p =>
+    p.id === this.props.match.params.notesId
+  );
+    let display =  (<section key={note.id} className="singleNote">
+      {/* <Link to={`/folder/${note.folderId}`}>GO BACK</Link> */}
+      <button onClick={this.handleGoBack}>GO BACK</button>
+      <div className="singleFolder">{folderName(note.folderId)}</div>
+        <h2>{note.name}</h2>
+        <p>{note.content}</p>
+    </section>);
+  
   return (
     <article className='noteContainer'> 
            
       {display}
     </article>
   )
+}
 }
 export default withRouter(NoteList);
