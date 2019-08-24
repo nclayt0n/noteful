@@ -1,18 +1,62 @@
 import React from 'react';
 import { Route, Link } from 'react-router-dom'
-
+import Context from './Context'
 import ListPage from './ListPage'
 import ActiveFolder from './ActiveFolder'
 import Note from './Note'
 import FolderForm from './FolderForm'
+import config from './config'
+
 class App extends React.Component {
- 
+    constructor(){
+    super()
+    this.state={
+      folders:[],
+      notes:[]
+  }
+}
+
+    componentDidMount() {
+      Promise.all([
+        fetch(`${config.API_ENDPOINT}/notes`),
+        fetch(`${config.API_ENDPOINT}/folders`)
+        ])
+      .then(([notesRes, foldersRes]) => {
+          if (!notesRes.ok)
+            return notesRes.json().then(e => Promise.reject(e));
+          if (!foldersRes.ok)
+            return foldersRes.json().then(e => Promise.reject(e));
+
+            return Promise.all([notesRes.json(), foldersRes.json()]);
+            })
+            .then(([notes, folders]) => {
+                this.setState({notes, folders});
+            })
+            .catch(error => {
+                console.error({error});
+            });
+    }
+    handleDeleteNote=(noteId)=>{
+      // this.setState({
+      //   notes:this.state.notes.filter(note=>note.id!==noteId)
+      // })
+      console.log(`delete${noteId}`)
+    }
     render() {
+      
+      const contextValue={
+        folders:this.state.folders,
+        notes:this.state.notes,
+        deleteNote:this.handleDeleteNote
+      }
+      console.log(contextValue)
         return ( 
         <div className = "App" >
             <Link to = '/' >
             <h1 > Noteful </h1> 
-            </Link> <main>
+            </Link> 
+            <main>
+            <Context.Provider value={contextValue}>
             <Route exact path = '/'
             component = {ListPage }
             /> <Route path = '/folder/:folderId'
@@ -24,11 +68,11 @@ class App extends React.Component {
               onClick={()=>history.push('/')}
               />
             }}
-            // component = { Note }
             /> 
             <Route path = '/folderForm'
             component = { FolderForm }
-            /> </main> 
+            /></Context.Provider> 
+            </main> 
         </div>
         );
     }

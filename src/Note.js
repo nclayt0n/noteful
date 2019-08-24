@@ -30,9 +30,7 @@ class NoteList extends React.Component {
     p.id === this.props.match.params.notesId
   );
     let display =  (<section key={note.id} className="singleNote">
-      {/* <Link to={`/folder/${note.folderId}`}>GO BACK</Link> */}
-      <button onClick={this.handleGoBack}>GO BACK</button>
-      <div className="singleFolder">{folderName(note.folderId)}</div>
+      <button className="singleFolder" onClick={this.handleGoBack}>{folderName(note.folderId)} </button>
         <h2>{note.name}</h2>
         <p>{note.content}</p>
     </section>);
