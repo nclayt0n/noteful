@@ -36,7 +36,7 @@ class App extends React.Component {
                 console.error({error});
             });
     }
-    handleDeleteNote=(noteId)=>{
+    handleDeleteNote=(noteId,props)=>{
     const url=`http://localhost:9090/notes/${noteId}`
     
     const options = {
@@ -47,15 +47,9 @@ class App extends React.Component {
     };
     console.log(url);
     fetch(url,options)
-    .then(response=> {
-      if (response.ok){
-      return response
-    }
-    throw new Error('Something went wrong');
-    })
-    .then(response=>response.json())
-    .then(responseJson=>console.log(responseJson))
-    .catch(err=> console.log(err.message))
+    .then(()=>{
+      props.history.push('/')
+    });
 
     this.setState({
             notes: this.state.notes.filter(note => note.id !== noteId)

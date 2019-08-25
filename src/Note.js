@@ -26,7 +26,7 @@ class NoteList extends React.Component {
     console.log('hi')
   }
   render(){
-  
+  console.log(this.props)
 
   const note= dummyStore.notes.find(p =>
     p.id === this.props.match.params.notesId
