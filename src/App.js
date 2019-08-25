@@ -36,7 +36,22 @@ class App extends React.Component {
                 console.error({error});
             });
     }
-    handleDeleteNote = noteId => {
+    handleClickDelete=(noteId,props)=>{
+      console.log(props)
+    const url=`http://localhost:9090/notes/${noteId}`
+    const options = {
+     method: 'DELETE',
+        headers:{
+          'content-type':'application/json'
+        },
+    };
+    fetch(url,options)
+    .then(() => {
+     props.history.push('/')
+    }) 
+    .then(this.deleteNote(noteId));  
+  }
+    deleteNote = noteId => {
     this.setState({
     notes: this.state.notes.filter(note => note.id !== noteId)
     });
@@ -45,7 +60,7 @@ class App extends React.Component {
       const contextValue={
         folders:this.state.folders,
         notes:this.state.notes,
-        deleteNote:this.handleDeleteNote
+        deleteNote:this.handleClickDelete
       }
         return ( 
         <div className = "App" >
@@ -55,16 +70,26 @@ class App extends React.Component {
             <main>
             <Context.Provider value={contextValue}>
             <Route exact path = '/'
-            component = {ListPage }
-            /> <Route path = '/folder/:folderId'
-            component = { ActiveFolder }
-            /> <Route path = '/notes/:notesId'
-            component={Note}
-            // render={({history})=>{
-            //   return <Note 
-            //   onClick={()=>history.push('/')}
-            //   />
-            // }}
+            render={({history})=>{
+              return <ListPage 
+              onClick={()=>history.push('/')}
+              value={contextValue}
+            /> }}/>
+            <Route path = '/folder/:folderId'
+            render={({history})=>{
+              return <ActiveFolder 
+              onClick={()=>history.push('/')}
+              value={contextValue}
+            /> }}/>
+            <Route path = '/notes/:notesId'
+            // component={Note}
+            render={({history})=>{
+              return <Note 
+              onClick={()=>history.push('/')}
+              value={contextValue}
+              
+              />
+            }}
             /> 
             <Route path = '/folderForm'
             component = { FolderForm }
