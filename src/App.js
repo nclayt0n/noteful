@@ -37,13 +37,31 @@ class App extends React.Component {
             });
     }
     handleDeleteNote=(noteId)=>{
-      // this.setState({
-      //   notes:this.state.notes.filter(note=>note.id!==noteId)
-      // })
-      console.log(`delete${noteId}`)
+    const url=`http://localhost:9090/notes/${noteId}`
+    
+    const options = {
+     method: 'DELETE',
+        headers:{
+          'content-type':'application/json'
+        },
+    };
+    console.log(url);
+    fetch(url,options)
+    .then(response=> {
+      if (response.ok){
+      return response
     }
+    throw new Error('Something went wrong');
+    })
+    .then(response=>response.json())
+    .then(responseJson=>console.log(responseJson))
+    .catch(err=> console.log(err.message))
+
+    this.setState({
+            notes: this.state.notes.filter(note => note.id !== noteId)
+        });
+  }
     render() {
-      
       const contextValue={
         folders:this.state.folders,
         notes:this.state.notes,
@@ -53,7 +71,7 @@ class App extends React.Component {
         return ( 
         <div className = "App" >
             <Link to = '/' >
-            <h1 > Noteful </h1> 
+            <h1> Noteful </h1> 
             </Link> 
             <main>
             <Context.Provider value={contextValue}>

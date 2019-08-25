@@ -14,7 +14,7 @@ export default class ActiveFolder extends React.Component {
     p.folderId === this.props.match.params.folderId
   )
   let display=folder.map(item=>{
-      return( <li key={item.id} className="note"><div className="noteInfo"><Link to={`/notes/${item.id}`}><h2>{item.name}</h2></Link><p className="noteDate">{item.modified}</p></div><button className="deleteButton" onClick={value.deleteNote(item.id)}>Delete Note</button></li>)
+      return( <li key={item.id} className="note"><div className="noteInfo"><Link to={`/notes/${item.id}`}><h2>{item.name}</h2></Link><p className="noteDate">{item.modified}</p></div><button className="deleteButton" onClick={()=>value.deleteNote(item.id)}>Delete Note</button></li>)
   })
 
   return (
