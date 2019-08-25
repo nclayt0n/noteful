@@ -7,6 +7,7 @@ import Note from './Note'
 import FolderForm from './FolderForm'
 import config from './config'
 
+
 class App extends React.Component {
     constructor(){
     super()
@@ -15,7 +16,6 @@ class App extends React.Component {
       notes:[]
   }
 }
-
     componentDidMount() {
       Promise.all([
         fetch(`${config.API_ENDPOINT}/notes`),
@@ -36,38 +36,17 @@ class App extends React.Component {
                 console.error({error});
             });
     }
-    handleDeleteNote=(noteId)=>{
-    const url=`http://localhost:9090/notes/${noteId}`
-    
-    const options = {
-     method: 'DELETE',
-        headers:{
-          'content-type':'application/json'
-        },
-    };
-    console.log(url);
-    fetch(url,options)
-    .then(response=> {
-      if (response.ok){
-      return response
-    }
-    throw new Error('Something went wrong');
-    })
-    .then(response=>response.json())
-    .then(responseJson=>console.log(responseJson))
-    .catch(err=> console.log(err.message))
-
+    handleDeleteNote = noteId => {
     this.setState({
-            notes: this.state.notes.filter(note => note.id !== noteId)
-        });
-  }
+    notes: this.state.notes.filter(note => note.id !== noteId)
+    });
+    };
     render() {
       const contextValue={
         folders:this.state.folders,
         notes:this.state.notes,
         deleteNote:this.handleDeleteNote
       }
-      console.log(contextValue)
         return ( 
         <div className = "App" >
             <Link to = '/' >
@@ -80,12 +59,12 @@ class App extends React.Component {
             /> <Route path = '/folder/:folderId'
             component = { ActiveFolder }
             /> <Route path = '/notes/:notesId'
-            render={({history})=>{
-              console.log(history)
-              return <Note 
-              onClick={()=>history.push('/')}
-              />
-            }}
+            component={Note}
+            // render={({history})=>{
+            //   return <Note 
+            //   onClick={()=>history.push('/')}
+            //   />
+            // }}
             /> 
             <Route path = '/folderForm'
             component = { FolderForm }
