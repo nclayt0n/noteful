@@ -22,18 +22,22 @@ class NoteList extends React.Component {
   handleGoBack=()=>{
     this.props.history.goBack();
   }
-  
+  deleteNote=()=>{
+    console.log('hi')
+  }
   render(){
   
 
   const note= dummyStore.notes.find(p =>
     p.id === this.props.match.params.notesId
   );
-    let display =  (<section key={note.id} className="singleNote">
+    let display =  (<div>
+    <ul className='notesList'>
+  <li key={note.id} className="note"><div className="noteInfo"><h2>{note.name}</h2><p className="noteDate">{note.modified}</p></div><button className="deleteButton" onClick={this.deleteNote}>Delete Note</button></li></ul><section key={note.id} className="singleNote">
       <button className="singleFolder" onClick={this.handleGoBack}>{folderName(note.folderId)} </button>
         <h2>{note.name}</h2>
         <p>{note.content}</p>
-    </section>);
+    </section></div>);
   
   return (
     <article className='noteContainer'> 
