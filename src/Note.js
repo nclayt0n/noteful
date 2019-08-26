@@ -18,7 +18,8 @@ class Note extends React.Component {
   handleGoBack=()=>{
     this.props.history.goBack();
   }
-  handleClickDelete=()=>{
+  handleDelete=()=>{
+    console.log(this.props);
     const noteId=this.props.match.params.notesId;
     const url=`http://localhost:9090/notes/${noteId}`
     const options = {
@@ -28,12 +29,9 @@ class Note extends React.Component {
         },
     };
     fetch(url,options)
-    .then(()=>{
-      this.context.deleteNote(noteId)
-    })
-    .then(() => {
+    .then(this.context.deleteNote(noteId))
      this.props.history.push('/')
-    });     
+         
   }
   render(){
   
@@ -44,7 +42,7 @@ class Note extends React.Component {
     return n.id===this.props.match.params.notesId});
   const {id,name,modified,content, folderId}=note;
   let display= (note===undefined)?<div>NO NOTE</div>:<div><ul className='notesList'>
-        <li key={id} className="note"><div className="noteInfo"><h2>{name}</h2><p className="noteDate">{modified}</p></div><button className="deleteButton" onClick={this.handleClickDelete}>Delete Note</button></li>
+        <li key={id} className="note"><div className="noteInfo"><h2>{name}</h2><p className="noteDate">{modified}</p></div><button className="deleteButton" onClick={this.handleDelete}>Delete Note</button></li>
         </ul>
         <section key={id} className="singleNote">
         <button className="singleFolder" onClick={this.handleGoBack}>{folderName(value,folderId)} </button>

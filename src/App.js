@@ -35,7 +35,22 @@ class App extends React.Component {
             .catch(error => {
                 console.error({error});
             });
+
     }
+    handleClickDelete=(noteId,props)=>{
+    console.log(this.props);
+    const url=`http://localhost:9090/notes/${noteId}`
+    const options = {
+     method: 'DELETE',
+        headers:{
+          'content-type':'application/json'
+        },
+    };
+    fetch(url,options)
+    .then(()=>this.handleDeleteNote(noteId))
+     props.history.push('/')
+         
+  }
     handleDeleteNote = noteId => {
     this.setState({
     notes: this.state.notes.filter(note => note.id !== noteId)
@@ -45,7 +60,8 @@ class App extends React.Component {
       const contextValue={
         folders:this.state.folders,
         notes:this.state.notes,
-        deleteNote:this.handleDeleteNote
+        deleteNote:this.handleDeleteNote,
+        handleClickDelete:this.handleClickDelete
       }
         return ( 
         <div className = "App" >
@@ -59,12 +75,12 @@ class App extends React.Component {
             /> <Route path = '/folder/:folderId'
             component = { ActiveFolder }
             /> <Route path = '/notes/:notesId'
-            component={Note}
-            // render={({history})=>{
-            //   return <Note 
-            //   onClick={()=>history.push('/')}
-            //   />
-            // }}
+            // component={Note}
+            render={({history})=>{
+              return <Note 
+              handleClickDelete={()=>history.push('/')}
+              />
+            }}
             /> 
             <Route path = '/folderForm'
             component = { FolderForm }

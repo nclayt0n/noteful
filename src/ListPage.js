@@ -24,7 +24,7 @@ import Context from './Context'
       </ul>
       <ul className='notesList'>
         {value.notes.map((item)=>{
-          return  <li key={item.id} className="note"><div className="noteInfo"><Link to={`/notes/${item.id}`}><h2>{item.name}</h2></Link><p className="noteDate">{item.modified}</p></div><button className="deleteButton" onClick={()=> value.deleteNote(item.id,this.props)}>Delete Note</button></li>})
+          return  <li key={item.id} className="note"><div className="noteInfo"><Link to={`/notes/${item.id}`}><h2>{item.name}</h2></Link><p className="noteDate">{item.modified}</p></div><button className="deleteButton" onClick={()=> value.handleClickDelete(item.id,this.props)}>Delete Note</button></li>})
         }
       </ul>
     </>)
