@@ -20,6 +20,10 @@ h1 {
     display: flex;
 }
 
+.folderList {
+    margin-left: 5px;
+}
+
 .folderList li {
     list-style-type: none;
     flex: 1;
@@ -53,8 +57,9 @@ h1 {
 }
 
 .notesList {
-    margin: 0 0 0 15px;
+    margin: 0 500px 0 15px;
     flex: 4;
+    padding: 0;
 }
 
 .note {
@@ -70,6 +75,13 @@ h1 {
     margin-right: 0;
     text-align: left;
     width: fit-content;
+}
+
+.noteContent {
+    padding: 5px;
+    line-height: 25px;
+    width: 60%;
+    margin: 10px;
 }
 
 .deleteButton {
@@ -94,6 +106,39 @@ h1 {
     border-radius: 25px;
     padding: 10px;
     letter-spacing: 1px;
-    margin: 20px;
+    margin: 10px;
     text-align: center;
+}
+
+.addNoteLink {
+    margin: auto;
+    padding: 10px;
+    border: 1px solid black;
+    width: fit-content;
+}
+
+.addNoteForm {
+    padding: 30px;
+    margin: auto;
+    width: 50%;
+}
+
+.addNoteForm form {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    padding: 30px;
+    border: 1px solid black;
+}
+
+.addNoteForm input,
+.addNoteForm select,
+.addNoteForm button {
+    margin: 10px;
+    font-size: 20px;
+}
+
+.addNoteForm label {
+    text-align: center;
+    font-size: 20px;
 }

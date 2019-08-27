@@ -6,6 +6,7 @@ import ActiveFolder from './ActiveFolder'
 import Note from './Note'
 import FolderForm from './FolderForm'
 import config from './config'
+import AddNote from './AddNote';
 
 
 class App extends React.Component {
@@ -83,8 +84,20 @@ class App extends React.Component {
             }}
             /> 
             <Route path = '/folderForm'
-            component = { FolderForm }
-            /></Context.Provider> 
+            render={({history})=>{
+              return <FolderForm 
+              callApi={()=>history.push('/')}/>
+            }}
+            // component = { FolderForm }
+            />
+            <Route path ='/addNote'
+            render={({history})=>{
+              return <AddNote 
+              onClick={()=>history.push('/')}/>
+            }}
+            // component = { AddNote }
+            />
+            </Context.Provider> 
             </main> 
         </div>
         );

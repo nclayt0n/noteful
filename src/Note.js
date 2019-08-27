@@ -46,8 +46,10 @@ class Note extends React.Component {
         </ul>
         <section key={id} className="singleNote">
         <button className="singleFolder" onClick={this.handleGoBack}>{folderName(value,folderId)} </button>
+        <div className='noteContent'>
           <h2>{name}</h2>
           <p>{content}</p>
+        </div>
       </section></div>;
   return (
     <article className='noteContainer'> 
