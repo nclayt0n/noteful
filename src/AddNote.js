@@ -81,12 +81,13 @@ validateName=(n)=> {
         <form onSubmit={e=>this.handleSubmit(e,value)} key={'addNoteForm'}>
         <fieldset>
             <legend>Add New Note</legend>
-            <label htmlFor='name'>Name: </label>
-            <ValidationError Namemessage={nError} />
-            <input name='name' type='text'/>
-            <label htmlFor='content'>Content: </label>
+            <label htmlFor='name'>Name: 
+           
+            <input name='name' type='text'/></label> <ValidationError Namemessage={nError} />
+            <label htmlFor='content'>Content: 
+            
+            <input name='content' type='text' /> </label>
             <ValidationError Contentmessage={cError}/>
-            <input name='content' type='text' /> 
             <select name="folder">
             {value.folders.map((folder)=>{
              return(<option name='folder'>{folder.name}</option>)

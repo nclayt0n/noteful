@@ -224,23 +224,56 @@ main {
     flex-direction: column;
     margin: auto;
     padding: 30px;
-    border: 1px solid black;
+    border: 1px solid var(--yellow);
     width: fit-content;
+    background-color: var(--steelBlue);
 }
 
 .addNoteForm fieldset {
     display: flex;
     width: 50%;
+    background-color: var(--steelBlue);
+    border: 1px solid var(--yellow);
+    margin: auto;
+    padding: 20px;
 }
 
-.addNoteForm input,
+.addNoteForm input {
+    margin: 10px;
+    font-size: 20px;
+    color: var(--gray);
+    background-color: var(--steelBlue);
+    padding: 5px;
+    margin: auto;
+}
+
 .addNoteForm select,
 .addNoteForm button {
     margin: 10px;
     font-size: 20px;
+    color: var(--gray);
+    background-color: var(--steelBlue);
+    margin: auto;
+    padding: 5px;
+    margin-bottom: 15px;
 }
 
 .addNoteForm label {
     text-align: center;
     font-size: 20px;
+    background-color: var(--steelBlue);
+    text-align: left;
+}
+
+.addNoteForm legend {
+    background-color: var(--steelBlue);
+    font-weight: bold;
+    margin: auto;
+    font-size: 24px;
+}
+
+.error {
+    background-color: var(--steelBlue);
+    margin: auto;
+    text-align: center;
 }
