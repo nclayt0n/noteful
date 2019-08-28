@@ -38,23 +38,22 @@ class FolderForm extends React.Component{
         event.preventDefault();
         const name=event.target.folderName.value;
         const id=Math.floor((Math.random() * 10)).toString();
-       
-       this.callApi(name,id);
+       this.validateName(name,id);
 
     }
-    validateName=()=> {
-        const name=this.state.name.trim();
-    if (name.length === 0) {
+    validateName=(name,id)=> {
+    if (name===undefined ||name.length === 0) {
       return "Name is required";
     } else if (name.length < 3) {
       return "Name must be at least 3 characters long.";
-    }
+    }this.callApi(name,id)
   }
 
     render(){
         return (
         <Context.Consumer>{(value)=>{
         const nameError=this.validateName();
+
         return(
         <form className="addForm" onSubmit={e=>this.handleSubmit(e)}>
             <fieldset>

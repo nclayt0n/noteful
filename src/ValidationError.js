@@ -1,12 +1,14 @@
 import React from 'react';
 
 export default function ValidationError(props) {
-  if(props.Namemessage || props.Contentmessage) {
+  console.log(props);
+  if(props.Namemessage || props.Contentmessage || props.message) {
     return (
       <div className="error">
       {props.Namemessage}
       
-      {props.Contentmessage}</div>
+      {props.Contentmessage}
+      {props.message}</div>
     );
   }
 
