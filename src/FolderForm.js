@@ -23,22 +23,22 @@ class FolderForm extends React.Component{
         },
         body: JSON.stringify({'id':id,'name':name})
     };
-    console.log(options.body)
         fetch(url,options)
         .then(this.context.addFolder({id,name}))
         .catch(error =>{
             console.log(error)
-        })
+        }) 
+        this.setState({
+            name:name,
+            id:id
+        });
         this.props.history.push('/')
     }
     handleSubmit=(event)=>{
         event.preventDefault();
         const name=event.target.folderName.value;
         const id=Math.floor((Math.random() * 10)).toString();
-        this.setState({
-            name:name,
-            id:id
-        });
+       
        this.callApi(name,id);
 
     }
@@ -52,18 +52,22 @@ class FolderForm extends React.Component{
   }
 
     render(){
+        return (
+        <Context.Consumer>{(value)=>{
         const nameError=this.validateName();
         return(
         <form className="addForm" onSubmit={e=>this.handleSubmit(e)}>
             <fieldset>
                 <legend>Create A Folder</legend>
-                <label htmlFor="folderName"  >Name</label>
-                <input name="folderName" type="text"/>
-                <button type='submit'>Add Folder</button>
+                <label htmlFor="folderName">Name:
+                <input name="folderName" type="text"/></label><br/>
+                <button type='submit' className="addFolderButton">Add Folder</button>
             </fieldset>
             <ValidationError message={nameError}/>
-        </form>)
-    }
+        </form>
+        )}}
+    </Context.Consumer>
+    )}
 }
 FolderForm.propTypes={
     name:PropTypes.string.isRequired,

@@ -73,6 +73,56 @@ main {
     color: var(--gray);
 }
 
+.addFolderButton {
+    background-color: var(--yellow);
+    line-height: 24px;
+    font-weight: bold;
+    margin: auto;
+    width: 50%;
+}
+
+.addForm {
+    background-color: var(--steelBlue);
+    border: 2px solid var(--yellow);
+    margin: auto;
+    width: fit-content;
+    padding: 20px;
+}
+
+.addForm input {
+    color: var(--gray);
+    line-height: 24px;
+    margin: auto;
+    padding: 2px;
+    width: 75%;
+    font-weight: bold;
+    background-color: var(--steelBlue);
+}
+
+.addForm fieldset,
+.addForm label {
+    background-color: var(--steelBlue);
+    font-size: 20px;
+    display: flex;
+    margin: auto;
+    font-weight: bold;
+}
+
+.addForm fieldset {
+    border: 1px solid var(--yellow);
+    padding: 20px;
+    margin: 5px;
+}
+
+.addForm legend {
+    border: none;
+    background-color: var(--steelBlue);
+    color: var(--gray);
+    font-size: 22px;
+    padding: 5px;
+    margin: auto;
+}
+
 .active {
     font-size: 10px;
     margin: 10px;

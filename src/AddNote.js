@@ -34,6 +34,13 @@ class AddNote extends React.Component{
         .catch(error =>{
             console.log(error)
         })
+        this.setState=({
+            name:name,
+            folderId:folderId,
+            id:id,
+            modified:modified,
+            content:content
+        });
         this.props.history.push('/')
     }
 validateName=(n)=> {
@@ -59,13 +66,7 @@ validateName=(n)=> {
         let id=Math.floor(Math.random()*100).toString();
         let modified=moment().format();
         let name=event.target.name.value.toString();
-        this.setState=({
-            name:name,
-            folderId:folderId,
-            id:id,
-            modified:modified,
-            content:content
-        });
+        
         if(name.length<3){this.validateName(name)} 
         if(content.length<5){this.validateContent(content)}else{this.callApi(content,folderId,id,modified,name)};
     }
@@ -94,7 +95,6 @@ validateName=(n)=> {
             <button type='submit'>Add Note</button>
         </fieldset>
         </form>
-        
         </div>
     )}}
     </Context.Consumer>
