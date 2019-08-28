@@ -3,6 +3,7 @@ import './app.css'
 import {withRouter} from 'react-router-dom'
 import Context from './Context'
 import NoteBox from './NoteBox'
+import PropTypes from 'prop-types'
 
 function folderName(value,idNum){
   let results;
@@ -35,13 +36,14 @@ class Note extends React.Component {
          
   }
   render(){
- 
+ let display;
     return(
       <Context.Consumer>{(value)=>{ 
   const note= value.notes.find((n)=>{ 
     return n.id===this.props.match.params.notesId});
   const {id,name,content, folderId}=note;
-  let display=
+  (note===undefined)?display=<div className="noNote">Note can not be displayed.</div>:
+  display=
     <div>
       <ul className='notesList'>
       <NoteBox value={value} item={note} prop={this.props}/>
@@ -60,4 +62,10 @@ class Note extends React.Component {
     </article>)
 }}</Context.Consumer>
 )}}
+Note.propTypes={
+  folderId:PropTypes.string,
+  id:PropTypes.string,
+  name:PropTypes.string,
+  content:PropTypes.string
+}
 export default withRouter(Note);

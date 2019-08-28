@@ -11,7 +11,8 @@ class FolderForm extends React.Component{
         super(props)
         this.state={
             name:'',
-            id:''
+            id:'',
+            error:''
         }
     }
     callApi=(name,id)=>{
@@ -42,17 +43,21 @@ class FolderForm extends React.Component{
 
     }
     validateName=(name,id)=> {
+        let results;
+        console.log('ive been called')
+        console.log(name)
     if (name===undefined ||name.length === 0) {
-      return "Name is required";
-    } else if (name.length < 3) {
-      return "Name must be at least 3 characters long.";
-    }this.callApi(name,id)
+      results= "Name is required";
+    }else if (name.length < 3) {
+      results= "Name must be at least 3 characters long.";
+    }else{this.callApi(name,id)}
+    console.log(results)
+    this.setState({error:results});
   }
 
     render(){
         return (
         <Context.Consumer>{(value)=>{
-        const nameError=this.validateName();
 
         return(
         <form className="addForm" onSubmit={e=>this.handleSubmit(e)}>
@@ -62,7 +67,7 @@ class FolderForm extends React.Component{
                 <input name="folderName" type="text"/></label><br/>
                 <button type='submit' className="addFolderButton">Add Folder</button>
             </fieldset>
-            <ValidationError message={nameError}/>
+            <ValidationError message={this.state.error}/>
         </form>
         )}}
     </Context.Consumer>

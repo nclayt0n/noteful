@@ -170,10 +170,19 @@ main {
 }
 
 .noteContent {
-    padding: 5px;
+    padding: 15px;
     line-height: 25px;
     width: 60%;
-    margin: 10px;
+    margin: 15px auto;
+    background-color: var(--yellow);
+    color: var(--slateGray);
+}
+
+.noteContent h2,
+.noteContent p {
+    background-color: var(--yellow);
+    color: var(--gray);
+    font-size: 22px;
 }
 
 .deleteButton {
@@ -186,15 +195,29 @@ main {
 }
 
 .singleNote {
-    margin: 10px;
+    display: flex;
+    margin: auto;
     padding: 25px;
+    flex: 3;
+    flex-direction: column;
 }
 
 .singleFolder {
+    display: flex;
+    margin: auto;
+    margin-bottom: 15px;
     border-bottom: 1px solid black;
     width: fit-content;
     padding: 15px;
-    margin: auto;
+    color: var(--yellow);
+    background-color: var(--slateGray);
+    font-weight: bold;
+    border: 1px solid var(--yellow);
+}
+
+.noNote {
+    color: yellow;
+    background-color: white;
 }
 
 .addNoteButton {
@@ -276,4 +299,6 @@ main {
     background-color: var(--steelBlue);
     margin: auto;
     text-align: center;
+    padding: 10px;
+    color: red;
 }

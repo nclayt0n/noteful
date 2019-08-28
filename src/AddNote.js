@@ -18,7 +18,7 @@ class AddNote extends React.Component{
     constructor(props){
         super(props)
         this.state={name:'',id:'',content:'',folderId:'',
-            modified:''}
+            modified:'',nameError:'',contentError:''}
     }
     callApi=(content,folderId,id,modified,name)=>{
         const url=`${config.API_ENDPOINT}/notes`;
@@ -44,18 +44,22 @@ class AddNote extends React.Component{
         this.props.history.push('/')
     }
 validateName=(n)=> {
+    let results;
     if ( n===undefined|| n.length === 0 ) {
-      return "Name is required";
+      results= "Name is required";
     } else if (n.length < 3) {
-      return "Name must be at least 3 characters long.";
+      results= "Name must be at least 3 characters long.";
     }
+    this.setState({nameError:results});
   }
   validateContent=(c)=>{
+      let results;
       if(c===undefined|| c.length ===0){
-          return 'Content is required'
+          results= 'Content is required'
       }else if(c.length<5){
-          return 'Content must be at least 5 characters long.'
+          results='Content must be at least 5 characters long.'
       }
+      this.setState({contentError:results});
   }
    
     handleSubmit=(event,value)=>{
@@ -71,8 +75,6 @@ validateName=(n)=> {
         if(content.length<5){this.validateContent(content)}else{this.callApi(content,folderId,id,modified,name)};
     }
     render(){
-        const nError=this.validateName();
-        const cError=this.validateContent();
         return(
     <Context.Consumer>{(value)=>{
         console.log(value)
@@ -82,12 +84,11 @@ validateName=(n)=> {
         <fieldset>
             <legend>Add New Note</legend>
             <label htmlFor='name'>Name: 
-           
-            <input name='name' type='text'/></label> <ValidationError Namemessage={nError} />
-            <label htmlFor='content'>Content: 
-            
+            <input name='name' type='text'/></label> 
+            <ValidationError Namemessage={this.state.nameError} />
+            <label htmlFor='content'>Content:
             <input name='content' type='text' /> </label>
-            <ValidationError Contentmessage={cError}/>
+            <ValidationError Contentmessage={this.state.contentError}/>
             <select name="folder">
             {value.folders.map((folder)=>{
              return(<option name='folder'>{folder.name}</option>)
