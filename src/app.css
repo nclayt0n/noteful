@@ -1,6 +1,25 @@
+:root {
+    --yellow: #C8923B;
+    --brown: #9D896B;
+    --gray: #333431;
+    --steelBlue: #BDC0CB;
+    --slateGray: #47555F;
+}
+
 * {
     text-decoration: none;
     box-sizing: border-box;
+    border-radius: 4px;
+    background-color: var(--gray);
+    color: var(--gray);
+    font-size: 18px;
+}
+
+h1 {
+    color: var(--yellow);
+    font-size: 40px;
+    text-align: center;
+    text-shadow: .5px 1px var(--slateGray);
 }
 
 a {
@@ -10,41 +29,48 @@ a {
 
 main {
     display: flex;
+    margin: auto;
 }
 
-h1 {
-    text-align: center;
-}
-
-.activeFolderContainer {
+.container {
     display: flex;
+    margin: auto;
 }
 
 .folderList {
-    margin-left: 5px;
+    margin: 0 20px auto 20px;
+    padding: 0;
 }
 
 .folderList li {
     list-style-type: none;
     flex: 1;
-    color: green;
-    border: 1px solid black;
+    border: 1px solid var(--brown);
+    box-shadow: .5px var(--brown);
     padding: 15px;
     width: 100px;
     text-align: center;
     height: fit-content;
+    margin: 5px;
+    background-color: var(--steelBlue);
+    font-weight: bold;
+    color: var(--gray);
 }
 
-.folders {
-    flex: 1;
+.folderList a {
+    background-color: var(--steelBlue);
 }
 
-.folder {
-    color: green;
-    border: 1px solid black;
-    padding: 15px;
-    width: 100px;
+.formButton {
+    border: 1px solid var(--brown);
+    padding: 10px;
+    letter-spacing: 1px;
+    margin: 10px;
     text-align: center;
+    background-color: var(--steelBlue);
+    font-weight: bold;
+    box-shadow: 1px var(--brown);
+    color: var(--gray);
 }
 
 .active {
@@ -57,9 +83,24 @@ h1 {
 }
 
 .notesList {
-    margin: 0 500px 0 15px;
     flex: 4;
+    margin: 0 20px auto 0;
     padding: 0;
+}
+
+.notesList li {
+    background-color: var(--steelBlue);
+    border: 1px solid var(--brown);
+}
+
+.noteInfo a,
+.noteInfo h2 {
+    background-color: var(--steelBlue);
+    font-size: 24px;
+}
+
+.noteInfo p {
+    background-color: var(--steelBlue);
 }
 
 .note {
@@ -72,6 +113,7 @@ h1 {
 }
 
 .noteInfo {
+    background-color: var(--steelBlue);
     margin-right: 0;
     text-align: left;
     width: fit-content;
@@ -87,6 +129,10 @@ h1 {
 .deleteButton {
     height: 30px;
     margin: auto;
+    background-color: var(--gray);
+    color: var(--steelBlue);
+    font-weight: bold;
+    border: 1px solid var(--brown);
 }
 
 .singleNote {
@@ -101,26 +147,26 @@ h1 {
     margin: auto;
 }
 
-.formButton {
-    border: 1px solid black;
-    border-radius: 25px;
-    padding: 10px;
-    letter-spacing: 1px;
-    margin: 10px;
-    text-align: center;
-}
-
-.addNoteLink {
+.addNoteButton {
     margin: auto;
     padding: 10px;
     border: 1px solid black;
-    width: fit-content;
+    width: 65%;
+    text-align: center;
+    background-color: var(--steelBlue);
+    font-size: 24px;
+    border: 1px solid var(--brown);
+}
+
+.addNoteButton a {
+    background-color: var(--steelBlue);
+    color: var(--gray);
+    font-weight: bold;
 }
 
 .addNoteForm {
     padding: 30px;
     margin: auto;
-    width: 50%;
 }
 
 .addNoteForm form {
@@ -129,6 +175,12 @@ h1 {
     margin: auto;
     padding: 30px;
     border: 1px solid black;
+    width: fit-content;
+}
+
+.addNoteForm fieldset {
+    display: flex;
+    width: 50%;
 }
 
 .addNoteForm input,

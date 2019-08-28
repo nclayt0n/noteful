@@ -1,7 +1,8 @@
 import React from 'react'
 import './app.css'
-import {withRouter, Link} from 'react-router-dom'
+import {withRouter} from 'react-router-dom'
 import Context from './Context'
+import NoteBox from './NoteBox'
 
 function folderName(value,idNum){
   let results;
@@ -34,30 +35,29 @@ class Note extends React.Component {
          
   }
   render(){
-  
+ 
     return(
       <Context.Consumer>{(value)=>{ 
-        console.log(value)
   const note= value.notes.find((n)=>{ 
     return n.id===this.props.match.params.notesId});
-  const {id,name,modified,content, folderId}=note;
-  let display= (note===undefined)?<div>NO NOTE</div>:<div><ul className='notesList'>
-        <li key={id} className="note"><div className="noteInfo"><h2>{name}</h2><p className="noteDate">{modified}</p></div><button className="deleteButton" onClick={this.handleDelete}>Delete Note</button></li>
-        </ul>
-        <section key={id} className="singleNote">
+  const {id,name,content, folderId}=note;
+  let display=
+    <div>
+      <ul className='notesList'>
+      <NoteBox value={value} item={note} prop={this.props}/>
+      </ul>
+      <section key={id} className="singleNote">
         <button className="singleFolder" onClick={this.handleGoBack}>{folderName(value,folderId)} </button>
         <div className='noteContent'>
           <h2>{name}</h2>
           <p>{content}</p>
         </div>
-      </section></div>;
+      </section>
+    </div>;
   return (
     <article className='noteContainer'> 
      {display}
     </article>)
-}
-}</Context.Consumer>
-    );
-  }
-}
+}}</Context.Consumer>
+)}}
 export default withRouter(Note);

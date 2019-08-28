@@ -7,7 +7,7 @@ import Note from './Note'
 import FolderForm from './FolderForm'
 import config from './config'
 import AddNote from './AddNote';
-
+import NoteBox from './NoteBox'
 
 class App extends React.Component {
     constructor(){
@@ -57,12 +57,25 @@ class App extends React.Component {
     notes: this.state.notes.filter(note => note.id !== noteId)
     });
     };
+    handleAddNote=(note)=>{
+      this.setState({
+        notes:[...this.state.notes, note]
+      })
+    }
+    handleAddFolder=(folder)=>{
+      this.setState({
+        folders:[...this.state.folders,folder]
+      })
+    }
+
     render() {
       const contextValue={
         folders:this.state.folders,
         notes:this.state.notes,
         deleteNote:this.handleDeleteNote,
-        handleClickDelete:this.handleClickDelete
+        handleClickDelete:this.handleClickDelete,
+        addNote:this.handleAddNote,
+        addFolder:this.handleAddFolder
       }
         return ( 
         <div className = "App" >
@@ -93,9 +106,15 @@ class App extends React.Component {
             <Route path ='/addNote'
             render={({history})=>{
               return <AddNote 
-              onClick={()=>history.push('/')}/>
+              handleSubmit={()=>history.push('/')}/>
             }}
-            // component = { AddNote }
+            />
+            <Route path = '/noteBox'
+            render={({history})=>{
+              return <NoteBox
+              handleClickDelete={()=>history.push('/')}
+              />
+            }}
             />
             </Context.Provider> 
             </main> 

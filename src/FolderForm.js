@@ -4,28 +4,28 @@ import './app.css'
 import config from './config'
 import PropTypes from 'prop-types'
 import ValidationError from './ValidationError'
+import Context from './Context';
 class FolderForm extends React.Component{
+    static contextType=Context;
     constructor(props){
         super(props)
         this.state={
             name:'',
+            id:''
         }
     }
-    callApi=(name)=>{
-        console.log(this.props)
-        const idNum=Math.floor((Math.random() * 10)).toString();
+    callApi=(name,id)=>{
         const url=`${config.API_ENDPOINT}/folders`;
         const options={
             method:'POST',
             headers:{
           'content-type':'application/json'
         },
-        body: JSON.stringify({'id':idNum,'name':name})
+        body: JSON.stringify({'id':id,'name':name})
     };
+    console.log(options.body)
         fetch(url,options)
-        .then(response => {
-            console.log(response)
-        })
+        .then(this.context.addFolder({id,name}))
         .catch(error =>{
             console.log(error)
         })
@@ -33,12 +33,13 @@ class FolderForm extends React.Component{
     }
     handleSubmit=(event)=>{
         event.preventDefault();
-        const name=event.target.name.value;
-        name.toString();
+        const name=event.target.folderName.value;
+        const id=Math.floor((Math.random() * 10)).toString();
         this.setState({
-            name:name
+            name:name,
+            id:id
         });
-       this.callApi(this.state.name);
+       this.callApi(name,id);
 
     }
     validateName=()=> {
@@ -57,7 +58,7 @@ class FolderForm extends React.Component{
             <fieldset>
                 <legend>Create A Folder</legend>
                 <label htmlFor="folderName"  >Name</label>
-                <input name="folderName" type="text" name='name'/>
+                <input name="folderName" type="text"/>
                 <button type='submit'>Add Folder</button>
             </fieldset>
             <ValidationError message={nameError}/>
@@ -65,6 +66,7 @@ class FolderForm extends React.Component{
     }
 }
 FolderForm.propTypes={
-    name:PropTypes.string.isRequired
+    name:PropTypes.string.isRequired,
+    idNum:PropTypes.string
 }
 export default withRouter(FolderForm)

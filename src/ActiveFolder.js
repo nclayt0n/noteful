@@ -4,45 +4,44 @@ import './app.css'
 import Context from './Context';
 import NoteButton from './NoteButton'
 import FolderButton from './FolderButton';
+import PropTypes from 'prop-types'
+import NoteBox from './NoteBox'
 
 class ActiveFolder extends React.Component {
+  static contextType=Context;
   selectedFolder=(folderId)=>{
-  let style;(folderId===this.props.match.params.folderId) ? style={backgroundColor:'green'}:style=null
+  let style;(folderId===this.props.match.params.folderId) ? style={backgroundColor:'#C8923B'}:style=null
     return style;
   }
-  render(){  
-    console.log(this.props)
+  render(){
     return(
       <Context.Consumer>{(value)=>{
-   console.log(value)
-  const folder = value.notes.filter(p =>
-    p.folderId === this.props.match.params.folderId
-  )
-  let display=folder.map(item=>{
-      return( <li key={item.id} className="note"><div className="noteInfo"><Link to={`/notes/${item.id}`}><h2>{item.name}</h2></Link><p className="noteDate">{item.modified}</p></div><button className="deleteButton" onClick={()=>value.handleClickDelete(item.id,this.props)}>Delete Note</button></li>)
-  })
-
-
+  const folder = value.notes.filter(p => p.folderId === this.props.match.params.folderId);
   return (
-    <div className='activeFolderContainer'>
-    <ul className='folderList'>
+    <div className='container'>
+      <ul className='folderList'>
         {value.folders.map((folder,idx) =>
           <li key={folder.id} style={this.selectedFolder(folder.id)}>
-            <Link to={`/folder/${folder.id}`}>
+            <Link to={`/folder/${folder.id}`} style={this.selectedFolder(folder.id)}>
              Folder {idx+1}
             </Link>
           </li>
         )}
-        <FolderButton/>
-        </ul>
-      <ul className="notesList">
-        {display}
-        <NoteButton/>
+      <FolderButton/>
       </ul>
-      
-      
+      <ul className="notesList">
+        {folder.map(item=>{
+        return <NoteBox value={value} item={item} prop={this.props}/>})}
+      <NoteButton/>
+      </ul>
     </div>
   )}}</Context.Consumer>
     )}
+}
+ActiveFolder.propTypes={
+  name:PropTypes.string,
+  id:PropTypes.string,
+  modified: PropTypes.string,
+  folderId:PropTypes.string
 }
 export default withRouter(ActiveFolder)

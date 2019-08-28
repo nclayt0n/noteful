@@ -4,15 +4,22 @@ import './app.css'
 import Context from './Context'
 import NoteButton from './NoteButton'
 import FolderButton from './FolderButton';
- class ListPage extends React.Component{
+import PropTypes from 'prop-types'
+import NoteBox from './NoteBox';
 
+ class ListPage extends React.Component{
+  static contextType=Context;
+   static defaultProps={
+     folder:[],
+     notes:[]
+   }
     render(){
         return(
           <Context.Consumer>{(value)=>{
-        console.log(value)
-        
+            console.log(value)
+
             return(
-            <>
+            <div class='container'>
       <ul className='folderList'>
         {value.folders.map((folder,idx) =>{
           return(<li key={folder.id}>
@@ -25,14 +32,18 @@ import FolderButton from './FolderButton';
         
       </ul>
       <ul className='notesList'>
-        {value.notes.map((item)=>{
-          return  <li key={item.id} className="note"><div className="noteInfo"><Link to={`/notes/${item.id}`}><h2>{item.name}</h2></Link><p className="noteDate">{item.modified}</p></div><button className="deleteButton" onClick={()=> value.handleClickDelete(item.id,this.props)}>Delete Note</button></li>})
-        }
+      {value.notes.map(item=>{
+        return <NoteBox value={value} item={item} prop={this.props}/>})}
         <NoteButton/>
       </ul>
-    </>)
+    </div>)
           }}
           </Context.Consumer>
 )}
+}
+ListPage.propTypes={
+  name:PropTypes.string,
+  id:PropTypes.string,
+  modified: PropTypes.string
 }
 export default withRouter(ListPage);
