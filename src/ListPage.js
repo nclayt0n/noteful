@@ -16,15 +16,13 @@ import NoteBox from './NoteBox';
     render(){
         return(
           <Context.Consumer>{(value)=>{
-            console.log(value)
-
             return(
             <div class='container'>
       <ul className='folderList'>
         {value.folders.map((folder,idx) =>{
           return(<li key={folder.id}>
             <Link to={`/folder/${folder.id}`}>
-             Folder {idx+1}
+            {folder.name}
             </Link>
           </li>
         )})}
