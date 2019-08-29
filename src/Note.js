@@ -4,6 +4,7 @@ import {withRouter} from 'react-router-dom'
 import Context from './Context'
 import NoteBox from './NoteBox'
 import PropTypes from 'prop-types'
+import ValidationError from './ValidationError';
 
 function folderName(value,idNum){
   let results;
@@ -17,6 +18,12 @@ function folderName(value,idNum){
 
 class Note extends React.Component {
   static contextType=Context;
+  constructor(props){
+    super(props)
+    this.state={
+      error:'',
+    }
+  }
   handleGoBack=()=>{
     this.props.history.goBack();
   }
@@ -33,17 +40,39 @@ class Note extends React.Component {
     fetch(url,options)
     .then(this.context.deleteNote(noteId))
      this.props.history.push('/')
-         
+  }
+  validateName=(name,id)=> {
+        let results;
+        console.log('ive been called')
+        console.log(name)
+    if (name===undefined ||name.length === 0) {
+      results= "Name is required";
+    }else if (name.length < 3) {
+      results= "Name must be at least 3 characters long.";
+    }else{this.callApi(name,id)}
+    console.log(results)
+    this.setState({error:results});
+  }
+  validateValue=(value)=>{
+    let results;
+    if(value===undefined || value.notes.length===0){
+      results='No note to display, return to Noteful page'
+    }else{
+      results=''
+    }
+    this.setState({error:results})
   }
   render(){
- let display;
+ console.log(this.state)
     return(
-      <Context.Consumer>{(value)=>{ 
+      <Context.Consumer>{(value)=>{
+        this.validateValue(value); 
+        console.log(value);
+        console.log(value.notes)
   const note= value.notes.find((n)=>{ 
     return n.id===this.props.match.params.notesId});
   const {id,name,content, folderId}=note;
-  (note===undefined)?display=<div className="noNote">Note can not be displayed.</div>:
-  display=
+  let display=
     <div>
       <ul className='notesList'>
       <NoteBox value={value} item={note} prop={this.props}/>
@@ -58,7 +87,8 @@ class Note extends React.Component {
     </div>;
   return (
     <article className='noteContainer'> 
-     {display}
+      {display}
+      <ValidationError message={this.state.error}/>
     </article>)
 }}</Context.Consumer>
 )}}
