@@ -3,6 +3,7 @@ import {withRouter,Link} from 'react-router-dom'
 import Context from './Context'
 import PropTypes from 'prop-types'
 
+
  class NoteBox extends React.Component{   
     static contextType=Context;
     render(){

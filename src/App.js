@@ -67,7 +67,6 @@ class App extends React.Component {
         folders:[...this.state.folders,folder]
       })
     }
-
     render() {
       const contextValue={
         folders:this.state.folders,
@@ -75,7 +74,7 @@ class App extends React.Component {
         deleteNote:this.handleDeleteNote,
         handleClickDelete:this.handleClickDelete,
         addNote:this.handleAddNote,
-        addFolder:this.handleAddFolder
+        addFolder:this.handleAddFolder,
       }
         return ( 
         <div className = "App" >
