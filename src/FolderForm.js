@@ -64,7 +64,7 @@ class FolderForm extends React.Component{
             <fieldset>
                 <legend>Create A Folder</legend>
                 <label htmlFor="folderName">Name:
-                <input name="folderName" type="text"/></label><br/>
+                <input name="folderName" id="folderName" type="text" aria-required="true" aria-describedby="error"/></label><br/>
                 <button type='submit' className="addFolderButton">Add Folder</button>
             </fieldset>
             <ValidationError message={this.state.error}/>

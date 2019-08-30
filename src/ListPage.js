@@ -17,7 +17,7 @@ import NoteBox from './NoteBox';
         return(
           <Context.Consumer>{(value)=>{
             return(
-            <div class='container'>
+            <div className='container'>
       <ul className='folderList'>
         {value.folders.map((folder,idx) =>{
           return(<li key={folder.id}>

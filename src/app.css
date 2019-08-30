@@ -15,6 +15,10 @@
     font-size: 18px;
 }
 
+button {
+    cursor: pointer;
+}
+
 h1 {
     color: var(--yellow);
     font-size: 40px;
@@ -187,18 +191,37 @@ main {
     line-height: 25px;
     width: 60%;
     margin: 15px auto;
-    background-color: var(--yellow);
+    background-color: var(--steelBlue);
     color: var(--slateGray);
 }
 
 .noteContent h2,
 .noteContent p {
-    background-color: var(--yellow);
-    color: var(--gray);
+    background-color: var(--steelBlue);
+    color: var(--yellow);
     font-size: 22px;
+    font-weight: bold;
+    color: var(--gray);
 }
 
-.deleteButton {
+.noteContent h2 {
+    text-align: center;
+    font-size: 28px;
+    width: fit-content;
+    margin: auto;
+}
+
+.noteContent p {
+    letter-spacing: .5px;
+    line-height: 26px;
+    text-indent: 10px;
+    background-color: var(--yellow);
+    padding: 20px;
+    margin: 20px;
+    border: 2px solid var(--slateGray)
+}
+
+.deleteNoteButton {
     height: 30px;
     margin: auto;
     background-color: var(--gray);
@@ -222,8 +245,8 @@ main {
     border-bottom: 1px solid black;
     width: fit-content;
     padding: 15px;
-    color: var(--yellow);
-    background-color: var(--slateGray);
+    color: var(--gray);
+    background-color: var(--yellow);
     font-weight: bold;
     border: 1px solid var(--yellow);
 }

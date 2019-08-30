@@ -15,7 +15,7 @@ import PropTypes from 'prop-types'
               <h2>{item.name}</h2>
             </Link>
             <p className="noteDate">{item.modified}</p>
-          <button className="deleteButton" onClick={()=>value.handleClickDelete(item.id,this.props)}>Delete</button>
+          <button className="deleteNoteButton" onClick={()=>value.handleClickDelete(item.id,this.props)}>Delete</button>
         </li>)
         }}</Context.Consumer>
     )}

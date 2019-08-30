@@ -42,8 +42,6 @@ class Note extends React.Component {
     let results;
     if(value===undefined || value.notes.length===0){
       results='No note to display, return to Noteful page'
-    }else{
-      results=''
     }
     return results;
   }
@@ -53,24 +51,22 @@ class Note extends React.Component {
         this.validateValue(value); 
   const note= value.notes.find((n)=>{ 
     return n.id===this.props.match.params.notesId});
-  const {id,name,content, folderId}=note;
+  const {name,content, folderId}=note;
   let display=
-    <div>
+  <>
       <ul className='notesList'>
       <NoteBox value={value} item={note} prop={this.props}/>
       </ul>
-      <section key={id} className="singleNote">
         <button className="singleFolder" onClick={this.handleGoBack}>{folderName(value,folderId)} </button>
         <div className='noteContent'>
           <h2>{name}</h2>
           <p>{content}</p>
         </div>
-      </section>
-    </div>;
+        </>;
   return (
     <article className='noteContainer'> 
       {display}
-      <ValidationError message={this.validateValue}/>
+      {(value===undefined)?(<ValidationError message={this.validateValue}/>):null}
     </article>)
 }}</Context.Consumer>
 )}}

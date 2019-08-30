@@ -84,10 +84,17 @@ validateName=(n)=> {
         <fieldset>
             <legend>Add New Note</legend>
             <label htmlFor='name'>Name: 
-            <input name='name' type='text'/></label> 
+            <input 
+            type='text' 
+            name='name' 
+            aria-label="New Note Name"  aria-required="true"/></label> 
             <ValidationError Namemessage={this.state.nameError} />
             <label htmlFor='content'>Content:
-            <input name='content' type='text' /> </label>
+            <input 
+            type='text'
+            name='content'
+            aria-label="New Note Content"  aria-required="true" 
+             /></label>
             <ValidationError Contentmessage={this.state.contentError}/>
             <select name="folder">
             {value.folders.map((folder)=>{
