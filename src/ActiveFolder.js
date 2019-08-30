@@ -23,7 +23,7 @@ class ActiveFolder extends React.Component {
         {value.folders.map((folder,idx) =>
           <li key={folder.id} style={this.selectedFolder(folder.id)}>
             <Link to={`/folder/${folder.id}`} style={this.selectedFolder(folder.id)}>
-             Folder {idx+1}
+             {folder.name}
             </Link>
           </li>
         )}

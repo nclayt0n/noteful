@@ -11,7 +11,7 @@ function folderName(value,idNum){
   let results;
   for(let i=0;i<value.folders.length;i++){
     if(idNum===value.folders[i].id){
-      results= `Folder ${i+1}: ${value.folders[i].name}`
+      results= `Folder: ${value.folders[i].name}`
     }
   }
   return results;

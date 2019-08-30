@@ -11,13 +11,11 @@ import PropTypes from 'prop-types'
         let item=this.props.item;
         return( 
         <li key={item.id} className="note">
-          <div className="noteInfo">
-            <Link to={`/notes/${item.id}`}>
+            <Link to={`/notes/${item.id}`} className="noteLink">
               <h2>{item.name}</h2>
             </Link>
             <p className="noteDate">{item.modified}</p>
-          </div>
-          <button className="deleteButton" onClick={()=>value.handleClickDelete(item.id,this.props)}>Delete Note</button>
+          <button className="deleteButton" onClick={()=>value.handleClickDelete(item.id,this.props)}>Delete</button>
         </li>)
         }}</Context.Consumer>
     )}

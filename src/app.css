@@ -150,8 +150,10 @@ main {
     font-size: 24px;
 }
 
-.noteInfo p {
+.noteLink {
     background-color: var(--steelBlue);
+    margin: 5px;
+    width: fit-content;
 }
 
 .note {
@@ -163,11 +165,21 @@ main {
     margin-bottom: 5px;
 }
 
-.noteInfo {
+.note h2 {
     background-color: var(--steelBlue);
-    margin-right: 0;
-    text-align: left;
     width: fit-content;
+    font-size: 24px;
+    margin: 5px;
+}
+
+.note p {
+    margin: auto;
+    padding: 5px;
+    font-size: 14px;
+}
+
+.noteDate {
+    background-color: var(--steelBlue);
 }
 
 .noteContent {
