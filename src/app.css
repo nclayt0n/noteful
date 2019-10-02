@@ -221,6 +221,10 @@ main {
     border: 2px solid var(--slateGray)
 }
 
+.noteContainer {
+    margin: auto;
+}
+
 .deleteNoteButton {
     height: 30px;
     margin: auto;
@@ -256,7 +260,8 @@ main {
     background-color: white;
 }
 
-.addNoteButton {
+.addNoteButton,
+.updateFolderButton {
     margin: auto;
     padding: 10px;
     border: 1px solid black;
@@ -267,18 +272,21 @@ main {
     border: 1px solid var(--brown);
 }
 
-.addNoteButton a {
+.addNoteButton a,
+.updateFolderButton a {
     background-color: var(--steelBlue);
     color: var(--gray);
     font-weight: bold;
 }
 
-.addNoteForm {
+.addNoteForm,
+.updateFolderOption {
     padding: 30px;
     margin: auto;
 }
 
-.addNoteForm form {
+.addNoteForm form,
+.updateFolderOption form {
     display: flex;
     flex-direction: column;
     margin: auto;
@@ -297,13 +305,22 @@ main {
     padding: 20px;
 }
 
-.addNoteForm input {
+.addNoteForm input,
+.updateFolderOption button,
+.updateFolderOption input,
+.updateFolderOption label,
+.updateFolderOption a,
+.updateFolderOption select {
     margin: 10px;
     font-size: 20px;
     color: var(--gray);
     background-color: var(--steelBlue);
     padding: 5px;
     margin: auto;
+}
+
+.updateFolderOption select {
+    display: flex;
 }
 
 .addNoteForm select,
@@ -337,4 +354,22 @@ main {
     text-align: center;
     padding: 10px;
     color: red;
+}
+
+.NotFoundPage {
+    margin: 5px;
+    padding: 15px;
+    background-color: var(--steelBlue);
+    border: 2px solid var(--yellow);
+}
+
+.NotFoundPage h2,
+.NotFoundPage p {
+    color: var(--gray);
+    text-align: center;
+    padding: 10px;
+    font-weight: bold;
+    font-size: 24px;
+    background-color: var(--steelBlue);
+    text-shadow: .5px .5px var(--yellow);
 }

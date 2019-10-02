@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Link } from 'react-router-dom'
+import { Switch, Route, Link } from 'react-router-dom'
 import Context from './Context'
 import ListPage from './ListPage'
 import ActiveFolder from './ActiveFolder'
@@ -8,116 +8,135 @@ import FolderForm from './FolderForm'
 import config from './config'
 import AddNote from './AddNote';
 import NoteBox from './NoteBox'
+import NotFoundPage from './NotFoundPage';
+import UpdateFolder from './UpdateFolder'
 
 class App extends React.Component {
-    constructor(){
-    super()
-    this.state={
-      folders:[],
-      notes:[]
-  }
-}
+    constructor() {
+        super()
+        this.state = {
+            folders: [],
+            notes: []
+        }
+    }
     componentDidMount() {
-      Promise.all([
-        fetch(`${config.API_ENDPOINT}/notes`),
-        fetch(`${config.API_ENDPOINT}/folders`)
-        ])
-      .then(([notesRes, foldersRes]) => {
-          if (!notesRes.ok)
-            return notesRes.json().then(e => Promise.reject(e));
-          if (!foldersRes.ok)
-            return foldersRes.json().then(e => Promise.reject(e));
+        Promise.all([
+                fetch(`${config.API_ENDPOINT}/notes`),
+                fetch(`${config.API_ENDPOINT}/folders`)
+            ])
+            .then(([notesRes, foldersRes]) => {
+                if (!notesRes.ok)
+                    return notesRes.json().then(e => Promise.reject(e));
+                if (!foldersRes.ok)
+                    return foldersRes.json().then(e => Promise.reject(e));
 
-            return Promise.all([notesRes.json(), foldersRes.json()]);
+                return Promise.all([notesRes.json(), foldersRes.json()]);
             })
             .then(([notes, folders]) => {
-                this.setState({notes, folders});
+                this.setState({ notes, folders });
             })
             .catch(error => {
-                console.error({error});
+                console.error({ error });
             });
 
     }
-    handleClickDelete=(noteId,props)=>{
-    console.log(this.props);
-    const url=`http://localhost:9090/notes/${noteId}`
-    const options = {
-     method: 'DELETE',
-        headers:{
-          'content-type':'application/json'
-        },
-    };
-    fetch(url,options)
-    .then(()=>this.handleDeleteNote(noteId))
-     props.history.push('/')
-         
-  }
-    handleDeleteNote = noteId => {
-    this.setState({
-    notes: this.state.notes.filter(note => note.id !== noteId)
-    });
-    };
-    handleAddNote=(note)=>{
-      this.setState({
-        notes:[...this.state.notes, note]
-      })
+    handleClickDelete = (noteId, props) => {
+        const url = `${config.API_ENDPOINT}/notes/${noteId}`
+        const options = {
+            method: 'DELETE',
+            headers: {
+                'content-type': 'application/json'
+            },
+        };
+        fetch(url, options)
+            .then(() => this.handleDeleteNote(noteId))
+        props.history.push('/')
+
     }
-    handleAddFolder=(folder)=>{
-      this.setState({
-        folders:[...this.state.folders,folder]
-      })
+    handleDeleteNote = noteId => {
+        this.setState({
+            notes: this.state.notes.filter(note => note.id !== noteId)
+        });
+    };
+    handleAddNote = (note) => {
+        console.log(note)
+        this.setState({
+            notes: [...this.state.notes, note]
+        })
+    }
+    handleAddFolder = (folder) => {
+        this.setState({
+            folders: [...this.state.folders, folder]
+        })
     }
     render() {
-      const contextValue={
-        folders:this.state.folders,
-        notes:this.state.notes,
-        deleteNote:this.handleDeleteNote,
-        handleClickDelete:this.handleClickDelete,
-        addNote:this.handleAddNote,
-        addFolder:this.handleAddFolder,
-      }
+        const contextValue = {
+            folders: this.state.folders,
+            notes: this.state.notes,
+            deleteNote: this.handleDeleteNote,
+            handleClickDelete: this.handleClickDelete,
+            addNote: this.handleAddNote,
+            addFolder: this.handleAddFolder,
+        }
         return ( 
-        <div className = "App" >
-            <Link to = '/' >
-            <h1> Noteful </h1> 
+        <div className = "App">
+            <Link to = '/'>
+            <h1 > Noteful </h1>  
             </Link> 
             <main>
-            <Context.Provider value={contextValue}>
+            <Context.Provider value = { contextValue } >
+            <Switch>
             <Route exact path = '/'
-            component = {ListPage }
-            /> <Route path = '/folder/:folderId'
-            component = { ActiveFolder }
-            /> <Route path = '/notes/:notesId'
-            // component={Note}
-            render={({history})=>{
-              return <Note 
-              handleClickDelete={()=>history.push('/')}
-              />
-            }}
-            /> 
+            component = { ListPage }/> 
+            <Route path = '/folders/:foldersId'
+            component = { ActiveFolder }/>  
+            <Route path = '/notes/:notesId'
+            render = {
+                ({ history }) => {
+                    return <Note
+                    handleClickDelete = {
+                        () => history.push('/')}/>
+                }
+            }
+            />  
             <Route path = '/folderForm'
-            render={({history})=>{
-              return <FolderForm 
-              callApi={()=>history.push('/')}/>
-            }}
-            // component = { FolderForm }
-            />
-            <Route path ='/addNote'
-            render={({history})=>{
-              return <AddNote 
-              handleSubmit={()=>history.push('/')}/>
-            }}
-            />
+            render = {
+                ({ history }) => {
+                    return <FolderForm
+                    callApi = {
+                        () => history.push('/')
+                    }
+                    />
+                }
+            }
+            /> 
+            <Route path = '/addNote'
+            render = {
+                ({ history }) => {
+                    return <AddNote
+                    handleSubmit = {
+                        () => history.push('/')}/>
+                }
+            }
+            /> 
             <Route path = '/noteBox'
-            render={({history})=>{
-              return <NoteBox
-              handleClickDelete={()=>history.push('/')}
-              />
-            }}
-            />
+            render = {
+                ({ history }) => {
+                    return <NoteBox
+                    handleClickDelete = {
+                        () => history.push('/')
+                    }
+                    />
+                }
+            }
+            /> 
+            <Route path='/update-folder'
+            component={UpdateFolder}/>
+            <NotFoundPage/>
+            </Switch> 
             </Context.Provider> 
-            </main> 
-        </div>
+            </main>  
+            </div>
         );
     }
 }

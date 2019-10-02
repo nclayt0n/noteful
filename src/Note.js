@@ -4,14 +4,14 @@ import {withRouter} from 'react-router-dom'
 import Context from './Context'
 import NoteBox from './NoteBox'
 import PropTypes from 'prop-types'
-import ValidationError from './ValidationError';
 import moment from 'moment'
+import config from './config'
 
 function folderName(value,idNum){
   let results;
   for(let i=0;i<value.folders.length;i++){
     if(idNum===value.folders[i].id){
-      results= `Folder: ${value.folders[i].name}`
+      results= `Folder: ${value.folders[i].folder_name}`
     }
   }
   return results;
@@ -27,7 +27,7 @@ class Note extends React.Component {
   }
   handleDelete=()=>{
     const noteId=this.props.match.params.notesId;
-    const url=`http://localhost:9090/notes/${noteId}`
+    const url=`${config.API_ENDPOINT}/notes/${noteId}`
     const options = {
      method: 'DELETE',
         headers:{
@@ -46,27 +46,29 @@ class Note extends React.Component {
     return results;
   }
   render(){
+    
     return(
-      <Context.Consumer>{(value)=>{
+      <Context.Consumer>
+      {(value)=>{
+        (value.notes.length===0)?value=this.defaultProps:
         this.validateValue(value); 
   const note= value.notes.find((n)=>{ 
-    return n.id===this.props.match.params.notesId});
-  const {name,content, folderId}=note;
+    return n.id.toString()===this.props.match.params.notesId});
+  const { note_name,content, folder_id}=note;
   let display=
   <>
       <ul className='notesList'>
       <NoteBox value={value} item={note} prop={this.props}/>
       </ul>
-        <button className="singleFolder" onClick={this.handleGoBack}>{folderName(value,folderId)} </button>
+        <button className="singleFolder" onClick={this.handleGoBack}>{folderName(value,folder_id)} </button>
         <div className='noteContent'>
-          <h2>{name}</h2>
+          <h2>{note_name}</h2>
           <p>{content}</p>
         </div>
         </>;
   return (
     <article className='noteContainer'> 
       {display}
-      {(value===undefined)?(<ValidationError message={this.validateValue}/>):null}
     </article>)
 }}</Context.Consumer>
 )}}

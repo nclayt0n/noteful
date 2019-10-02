@@ -8,8 +8,10 @@ import ValidationError from './ValidationError'
 
 
 function findFolder(value,folder){
+    console.log(value)
+    console.log(folder)
     const folderName=folder;
-    const folderId= value.folders.find((f)=>f.name===folderName);
+    const folderId= value.folders.find((f)=>f.folder_name===folderName);
     return folderId.id;
 }
 
@@ -17,28 +19,26 @@ class AddNote extends React.Component{
     static contextType=Context;
     constructor(props){
         super(props)
-        this.state={name:'',id:'',content:'',folderId:'',
-            modified:'',nameError:'',contentError:''}
+        this.state={id:'',name:'',modified:'',folderId:'',content:'',nameError:'',contentError:''}
     }
-    callApi=(content,folderId,id,modified,name)=>{
+    callApi=(note_name,date_published,folder_id,content)=>{
         const url=`${config.API_ENDPOINT}/notes`;
         const options={
             method:'POST',
             headers:{
           'content-type':'application/json'
         },
-        body: JSON.stringify({'content':content,'folderId':folderId, 'id':id,'modified':modified,'name':name})
+        body: JSON.stringify({'note_name':note_name,'date_published':date_published,'folder_id':folder_id,'content':content })
     };
         fetch(url,options)
-        .then(this.context.addNote({content,folderId,id,modified,name}))
+        .then(this.context.addNote({note_name,content,folder_id,date_published,}))
         .catch(error =>{
             console.log(error)
         })
         this.setState=({
-            name:name,
-            folderId:folderId,
-            id:id,
-            modified:modified,
+            note_name:note_name,
+            date_published:date_published,
+            folder_id:folder_id,
             content:content
         });
         this.props.history.push('/')
@@ -66,18 +66,16 @@ validateName=(n)=> {
         event.preventDefault();
         let content=event.target.content.value;
         let folder= event.target.folder.value;
-        let folderId=findFolder(value,folder);
-        let id=Math.floor(Math.random()*100).toString();
-        let modified=moment().format();
+        let folder_id=findFolder(value,folder);
+        let date_published=moment().format();
         let name=event.target.name.value.toString();
         
         if(name.length<3){this.validateName(name)} 
-        if(content.length<5){this.validateContent(content)}else{this.callApi(content,folderId,id,modified,name)};
+        if(content.length<5){this.validateContent(content)}else{this.callApi(name,date_published,folder_id,content)};
     }
     render(){
         return(
     <Context.Consumer>{(value)=>{
-        console.log(value)
         return(
             <div className="addNoteForm">
         <form onSubmit={e=>this.handleSubmit(e,value)} key={'addNoteForm'}>
@@ -98,7 +96,7 @@ validateName=(n)=> {
             <ValidationError Contentmessage={this.state.contentError}/>
             <select name="folder">
             {value.folders.map((folder)=>{
-             return(<option name='folder'>{folder.name}</option>)
+             return(<option name='folder' key={folder.id}>{folder.folder_name}</option>)
             })}
             </select>
             <button type='submit'>Add Note</button>
@@ -110,11 +108,11 @@ validateName=(n)=> {
     )}
 }
 AddNote.propTypes={
-    name:PropTypes.string.isRequired,
-    content:PropTypes.string.isRequired,
-    folderId:PropTypes.string.isRequired,
-    id:PropTypes.string.isRequired,
-    modified:PropTypes.string.isRequired
+    name:PropTypes.string,
+    content:PropTypes.string,
+    folderId:PropTypes.string,
+    id:PropTypes.string,
+    modified:PropTypes.string
 
 }
 export default withRouter(AddNote)

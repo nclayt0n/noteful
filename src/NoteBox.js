@@ -13,9 +13,9 @@ import PropTypes from 'prop-types'
         return( 
         <li key={item.id} className="note">
             <Link to={`/notes/${item.id}`} className="noteLink">
-              <h2>{item.name}</h2>
+              <h2>{item.note_name}</h2>
             </Link>
-            <p className="noteDate">{item.modified}</p>
+            <p className="noteDate">{item.date_published}</p>
           <button className="deleteNoteButton" onClick={()=>value.handleClickDelete(item.id,this.props)}>Delete</button>
         </li>)
         }}</Context.Consumer>

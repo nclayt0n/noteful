@@ -19,10 +19,10 @@ import NoteBox from './NoteBox';
             return(
             <div className='container'>
       <ul className='folderList'>
-        {value.folders.map((folder,idx) =>{
-          return(<li key={folder.id}>
-            <Link to={`/folder/${folder.id}`}>
-            {folder.name}
+        {value.folders.map((folder) =>{
+          return(<li key={folder.folder_id}>
+            <Link to={`/folders/${folder.id}`}>
+            {folder.folder_name}
             </Link>
           </li>
         )})}
@@ -31,7 +31,7 @@ import NoteBox from './NoteBox';
       </ul>
       <ul className='notesList'>
       {value.notes.map(item=>{
-        return <NoteBox value={value} item={item} prop={this.props}/>})}
+        return (<NoteBox key={item.id} value={value} item={item} prop={this.props}/>)})}
         <NoteButton/>
       </ul>
     </div>)
