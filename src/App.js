@@ -40,6 +40,12 @@ class App extends React.Component {
             });
 
     }
+    deleteFolder=folderId=>{
+//this is where you need to add code to delete folder, already added to context
+this.setState({
+            folders: this.state.folders.filter(folder => folder.id !== folderId)
+        });
+}
     handleClickDelete = (noteId, props) => {
         const url = `${config.API_ENDPOINT}/notes/${noteId}`
         const options = {
@@ -77,6 +83,7 @@ class App extends React.Component {
             handleClickDelete: this.handleClickDelete,
             addNote: this.handleAddNote,
             addFolder: this.handleAddFolder,
+            deleteFolder:this.deleteFolder,
         }
         return ( 
         <div className = "App">
