@@ -40,8 +40,18 @@ class App extends React.Component {
             });
 
     }
+    updateFolder=folder=>{
+        console.log(folder)
+        console.log(this.state.folders)
+       let folder_name=folder.folder_name;
+       let folder_id=folder.folder_id;
+       this.state.folders.map(folder=>{
+    if(folder.id===folder.folder_id){
+        this.setState({folders:{folder_name,folder_id}})
+    }
+    })
+}
     deleteFolder=folderId=>{
-//this is where you need to add code to delete folder, already added to context
 this.setState({
             folders: this.state.folders.filter(folder => folder.id !== folderId)
         });
@@ -84,6 +94,7 @@ this.setState({
             addNote: this.handleAddNote,
             addFolder: this.handleAddFolder,
             deleteFolder:this.deleteFolder,
+            updateFolder:this.updateFolder,
         }
         return ( 
         <div className = "App">

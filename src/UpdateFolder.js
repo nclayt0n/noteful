@@ -27,12 +27,31 @@ class UpdateFolder extends React.Component{
         body: JSON.stringify({'folder_name':folder_name,'folder_id':folder_id})
     };
         fetch(url,options)
-        .then(this.context.deleteFolder({folder_name,folder_id,}))
+        .then(this.context.updateFolder({folder_name,folder_id}))
         .catch(error =>{
             console.log(error)
         })
         this.setState=({
             folder_name:folder_name,
+            folder_id:folder_id,
+        });
+        this.props.history.push('/')
+    }
+    callDeleteApi=(folder_id,actionWord)=>{
+        const url=`${config.API_ENDPOINT}/folders/${folder_id}`;
+        const options={
+            method:actionWord,
+            headers:{
+          'content-type':'application/json'
+        },
+        body: JSON.stringify({'folder_id':folder_id})
+    };
+        fetch(url,options)
+        .then(this.context.deleteFolder(folder_id))
+        .catch(error =>{
+            console.log(error)
+        })
+        this.setState=({
             folder_id:folder_id,
         });
         this.props.history.push('/')
@@ -55,7 +74,14 @@ validateName=(n)=> {
       }
       this.setState({contentError:results});
   }
-   
+   handleDelete=(event,value)=>{
+    let action=event.currentTarget.action.split("/")
+        let actionWord=action[action.length-1].toUpperCase();
+        event.preventDefault();
+        let folder= event.target.folder.value;
+        let folder_id=findFolder(value,folder);
+        this.callDeleteApi(folder_id,actionWord);
+   }
     handleSubmit=(event,value)=>{
         let action=event.currentTarget.action.split("/")
         let actionWord=action[action.length-1].toUpperCase();
@@ -63,7 +89,6 @@ validateName=(n)=> {
         let folder= event.target.folder.value;
         let folder_id=findFolder(value,folder);
         let folder_name=event.target.name.value.toString();
-        
         if(folder_name.length<3){this.validateName(folder_name)} 
         else{this.callApi(folder_name,folder_id,actionWord)};
     }
@@ -77,7 +102,7 @@ validateName=(n)=> {
            <br/>
             <select name="folder">
             {value.folders.map((folder)=>{
-             return(<option name='folder' key={folder.id}>{folder.folder_name}</option>)
+             return(<option name="folder" key={folder.id}>{folder.folder_name}</option>)
             })}
             </select></label> 
             <label htmlFor='name'>Update Folder Name: 
@@ -89,7 +114,13 @@ validateName=(n)=> {
              /></label>
             <button type='submit'>Submit New Name</button>
             </form>
-            <form action="delete" onSubmit={e=>this.handleSubmit(e,value)} key={'deleteFolderForm'}><button type='submit' onClick={this.deleteFolder}>Delete Folder</button><button><Link to={'/'}>Cancel</Link></button></form>
+            <form action="delete" onSubmit={e=>this.handleDelete(e,value)} key={'deleteFolderForm'}> <label htmlFor='folder_name'>Choose a Folder to Alter: 
+           <br/>
+            <select name="folder">
+            {value.folders.map((folder)=>{
+             return(<option name="folder" key={folder.id}>{folder.folder_name}</option>)
+            })}
+            </select></label> <button type='submit' onClick={this.deleteFolder}>Delete Folder</button><button><Link to={'/'}>Cancel</Link></button></form>
         </div>
 )}}
     </Context.Consumer>
