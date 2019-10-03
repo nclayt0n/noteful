@@ -69,10 +69,6 @@ validateName=(n)=> {
         event.target.content.value?content=event.target.content.value:content=note.content;
         
         let folder_id=findFolder(value,folder_name);
-        console.log(folder_id)
-        console.log(folder_name)
-        console.log(content)
-        console.log(updatedName)
         if(folder_name.length<3){this.validateName(folder_name)} 
         else{this.callApi(noteId,content,folder_id,updatedName,note.date_published)};
     }
@@ -84,34 +80,44 @@ validateName=(n)=> {
                 let folderName=value.folders.find(n=>n.id===note.folder_id) || '';
         return(
         <div className="updateNoteOption">
-            <form action="patch" onSubmit={e=>this.handleSubmit(e,value,noteId,note)} key={'updateNoteForm'}>
-            <label htmlFor='folder_name'>Move to Folder: 
-           <br/>
-            <select name="folder"><option name='folder'>{folderName.folder_name}</option>
-            {value.folders.filter(f=>f.id!==note.folder_id).map((folder)=>{
-             return(<option name="folder" key={folder.id}>{folder.folder_name}</option>)
-            })}
-            </select></label> 
-            
-            <label htmlFor='name'>Update Note Name: 
-           <br/>
-            <input 
-            type='text'
-            name='newName'
-            placeholder={note.note_name}
-            aria-label="Updated Note Name"  aria-required="true" 
-             /></label>
-             <label htmlFor='content'>Update Note Content: 
-             <br/>
-             <input 
-            type='text'
-            name='content'
-            placeholder={note.content}
-            aria-label="Updated Note Name"  aria-required="true" 
-             />
-             </label>
-            <button type='submit'>Update Note</button>
-            </form><button><Link to={'/'}>Cancel</Link></button>
+            <form 
+            action="patch" 
+            onSubmit={e=>this.handleSubmit(e,value,noteId,note)} 
+            key={'updateNoteForm'}>
+                <label htmlFor='folder_name'>
+                Move to Folder: 
+                <br/>
+                <select name="folder">
+                    <option name='folder'>{folderName.folder_name}
+                    </option>
+                    {value.folders.filter(f=>f.id!==note.folder_id).map((folder)=>{
+                    return(<option name="folder" key={folder.id}>{folder.folder_name}</option>)
+                    })}
+                </select>
+                </label> 
+                <label htmlFor='name'>Update Note Name: 
+                <br/>
+                <input 
+                type='text'
+                name='newName'
+                placeholder={note.note_name}
+                aria-label="Updated Note Name"  aria-required="true" 
+                />
+                </label>
+                <label htmlFor='content'>Update Note Content: 
+                <br/>
+                <input 
+                type='text'
+                name='content'
+                placeholder={note.content}
+                aria-label="Updated Note Name"  aria-required="true" 
+                />
+                </label>
+                <button className="updateButton"type='submit'>Update Note</button>
+            </form>
+            <button className="cancelButton">
+                <Link to={'/'}>Cancel</Link>
+            </button>
         </div>
 )}}
     </Context.Consumer>

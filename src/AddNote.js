@@ -68,7 +68,10 @@ validateName=(n,notes)=> {
     handleSubmit=(event,value)=>{
         event.preventDefault();
         let content=event.target.content.value;
-        let folder= event.target.folder.value;
+        console.log(content)
+        let folder;
+         event.target.folder.value?folder=event.target.folder.value:folder=value.folders.folder_name[0];
+         console.log(folder)
         let folder_id=findFolder(value,folder);
         let date_published=moment().format();
         let name=event.target.name.value.toString();
@@ -90,7 +93,7 @@ validateName=(n,notes)=> {
             aria-label="New Note Name"  aria-required="true"/></label> 
             <ValidationError Namemessage={this.state.nameError} />
             <label htmlFor='content'>Content:
-            <input 
+            <textarea
             type='text'
             name='content'
             aria-label="New Note Content"  aria-required="true" 
