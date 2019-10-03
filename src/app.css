@@ -261,7 +261,8 @@ main {
 }
 
 .addNoteButton,
-.updateFolderButton {
+.updateFolderButton,
+.updateNoteButton {
     margin: auto;
     padding: 10px;
     border: 1px solid black;
@@ -273,20 +274,23 @@ main {
 }
 
 .addNoteButton a,
-.updateFolderButton a {
+.updateFolderButton a,
+.updateNoteButton a {
     background-color: var(--steelBlue);
     color: var(--gray);
     font-weight: bold;
 }
 
 .addNoteForm,
-.updateFolderOption {
+.updateFolderOption,
+.updateNoteOption {
     padding: 30px;
     margin: auto;
 }
 
 .addNoteForm form,
-.updateFolderOption form {
+.updateFolderOption form,
+.updateNoteOption form {
     display: flex;
     flex-direction: column;
     margin: auto;
@@ -310,13 +314,22 @@ main {
 .updateFolderOption input,
 .updateFolderOption label,
 .updateFolderOption a,
-.updateFolderOption select {
+.updateFolderOption select,
+.updateNoteOption button,
+.updateNoteOption input,
+.updateNoteOption label,
+.updateNoteOption a,
+.updateNoteOption select {
     margin: 10px;
     font-size: 20px;
     color: var(--gray);
     background-color: var(--steelBlue);
     padding: 5px;
     margin: auto;
+}
+
+.updateNoteOption input {
+    width: fit-content;
 }
 
 .updateFolderOption select {

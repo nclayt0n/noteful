@@ -34,12 +34,12 @@ class FolderForm extends React.Component{
         });
         this.props.history.push('/')
     }
-    handleSubmit(event){
+    handleSubmit(event,value){
         event.preventDefault();
         const folder_name=event.target.folderName.value;
-       this.validateName(folder_name);
+       this.validateName(folder_name,value.folders);
     }
-    validateName=(folder_name)=> {
+    validateName=(folder_name,folders)=> {
         let results;
         console.log('ive been called')
         console.log(folder_name)
@@ -47,6 +47,8 @@ class FolderForm extends React.Component{
       results= "Name is required";
     }else if (folder_name.length < 3) {
       results= "Name must be at least 3 characters long.";
+    }else if(folders.find(folder=>folder_name===folder.folder_name)){
+        results="Folder already exists"
     }else{this.callApi(folder_name)}
     this.setState({error:results});
   }
@@ -55,7 +57,7 @@ class FolderForm extends React.Component{
         return (
         <Context.Consumer>{(value)=>{
         return(
-        <form className="addForm" onSubmit={e=>this.handleSubmit(e)}>
+        <form className="addForm" onSubmit={e=>this.handleSubmit(e,value)}>
             <fieldset>
                 <legend>Create A Folder</legend>
                 <label htmlFor="folderName">Name:

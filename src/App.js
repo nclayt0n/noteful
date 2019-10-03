@@ -10,6 +10,8 @@ import AddNote from './AddNote';
 import NoteBox from './NoteBox'
 import NotFoundPage from './NotFoundPage';
 import UpdateFolder from './UpdateFolder'
+import UpdateNote from './UpdateNote'
+
 
 class App extends React.Component {
     constructor() {
@@ -40,22 +42,17 @@ class App extends React.Component {
             });
 
     }
-    updateFolder=folder=>{
-        console.log(folder)
-        console.log(this.state.folders)
-       let folder_name=folder.folder_name;
-       let folder_id=folder.folder_id;
-       this.state.folders.map(folder=>{
-    if(folder.id===folder.folder_id){
-        this.setState({folders:{folder_name,folder_id}})
+    handleUpdateNote=note=>{
+        this.setState({
+            notes: [...this.state.notes.filter(n => n.id !== note.id),note]
+        })
     }
-    })
-}
-    deleteFolder=folderId=>{
-this.setState({
-            folders: this.state.folders.filter(folder => folder.id !== folderId)
-        });
-}
+    handleUpdateFolder=folder=>{
+       this.setState({
+        folders: [...this.state.folders.filter(f => f.id !== folder.folder_id),folder]
+    });
+};
+    
     handleClickDelete = (noteId, props) => {
         const url = `${config.API_ENDPOINT}/notes/${noteId}`
         const options = {
@@ -85,6 +82,11 @@ this.setState({
             folders: [...this.state.folders, folder]
         })
     }
+    handleDeleteFolder=folderId=>{
+        this.setState({
+            folders: this.state.folders.filter(folder => folder.id !== folderId)
+        });
+}
     render() {
         const contextValue = {
             folders: this.state.folders,
@@ -93,13 +95,14 @@ this.setState({
             handleClickDelete: this.handleClickDelete,
             addNote: this.handleAddNote,
             addFolder: this.handleAddFolder,
-            deleteFolder:this.deleteFolder,
-            updateFolder:this.updateFolder,
+            deleteFolder:this.handleDeleteFolder,
+            updateFolder:this.handleUpdateFolder,
+            UpdateNote:this.handleUpdateNote,
         }
         return ( 
         <div className = "App">
             <Link to = '/'>
-            <h1 > Noteful </h1>  
+            <h1> Noteful </h1>  
             </Link> 
             <main>
             <Context.Provider value = { contextValue } >
@@ -150,6 +153,7 @@ this.setState({
             /> 
             <Route path='/update-folder'
             component={UpdateFolder}/>
+            <Route path='/update-note/:noteId' component={UpdateNote}/>
             <NotFoundPage/>
             </Switch> 
             </Context.Provider> 

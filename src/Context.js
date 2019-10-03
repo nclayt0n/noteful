@@ -10,4 +10,5 @@ export default React.createContext({
     addFolder: () => {},
     deleteFolder: () => {},
     updateFolder: () => {},
+    updateNote: () => {},
 })

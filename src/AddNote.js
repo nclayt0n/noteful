@@ -43,12 +43,14 @@ class AddNote extends React.Component{
         });
         this.props.history.push('/')
     }
-validateName=(n)=> {
+validateName=(n,notes)=> {
     let results;
     if ( n===undefined|| n.length === 0 ) {
       results= "Name is required";
     } else if (n.length < 3) {
       results= "Name must be at least 3 characters long.";
+    }else if(notes.find(note=>n===note.note_name)){
+        results="Note name already taken"
     }
     this.setState({nameError:results});
   }
@@ -63,6 +65,9 @@ validateName=(n)=> {
   }
    
     handleSubmit=(event,value)=>{
+        console.log(event.target.content.value)
+        console.log(value)
+        console.log(event.target.name.value)
         event.preventDefault();
         let content=event.target.content.value;
         let folder= event.target.folder.value;
@@ -70,7 +75,7 @@ validateName=(n)=> {
         let date_published=moment().format();
         let name=event.target.name.value.toString();
         
-        if(name.length<3){this.validateName(name)} 
+        if(name.length<3){this.validateName(name,value.notes)} 
         if(content.length<5){this.validateContent(content)}else{this.callApi(name,date_published,folder_id,content)};
     }
     render(){

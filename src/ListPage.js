@@ -19,8 +19,8 @@ import NoteBox from './NoteBox';
             return(
             <div className='container'>
       <ul className='folderList'>
-        {value.folders.map((folder) =>{
-          return(<li key={folder.folder_id}>
+        {value.folders.map((folder)=>{
+          return(<li key={folder.id}>
             <Link to={`/folders/${folder.id}`}>
             {folder.folder_name}
             </Link>

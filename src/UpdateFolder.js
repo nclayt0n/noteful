@@ -44,7 +44,7 @@ class UpdateFolder extends React.Component{
             headers:{
           'content-type':'application/json'
         },
-        body: JSON.stringify({'folder_id':folder_id})
+        body: JSON.stringify({'id':folder_id})
     };
         fetch(url,options)
         .then(this.context.deleteFolder(folder_id))
@@ -56,24 +56,19 @@ class UpdateFolder extends React.Component{
         });
         this.props.history.push('/')
     }
-validateName=(n)=> {
+validateName=(n,folders)=> {
+
     let results;
     if ( n===undefined|| n.length === 0 ) {
       results= "Name is required";
+    }if(folders.find(n===folders.name)){
+        results="Folder already exists"
     } else if (n.length < 3) {
       results= "Name must be at least 3 characters long.";
     }
     this.setState({nameError:results});
   }
-  validateContent=(c)=>{
-      let results;
-      if(c===undefined|| c.length ===0){
-          results= 'Content is required'
-      }else if(c.length<5){
-          results='Content must be at least 5 characters long.'
-      }
-      this.setState({contentError:results});
-  }
+
    handleDelete=(event,value)=>{
     let action=event.currentTarget.action.split("/")
         let actionWord=action[action.length-1].toUpperCase();
@@ -89,7 +84,7 @@ validateName=(n)=> {
         let folder= event.target.folder.value;
         let folder_id=findFolder(value,folder);
         let folder_name=event.target.name.value.toString();
-        if(folder_name.length<3){this.validateName(folder_name)} 
+        if(folder_name.length<3){this.validateName(folder_name,value.folders)} 
         else{this.callApi(folder_name,folder_id,actionWord)};
     }
     render(){
@@ -114,7 +109,7 @@ validateName=(n)=> {
              /></label>
             <button type='submit'>Submit New Name</button>
             </form>
-            <form action="delete" onSubmit={e=>this.handleDelete(e,value)} key={'deleteFolderForm'}> <label htmlFor='folder_name'>Choose a Folder to Alter: 
+            <form action="delete" onSubmit={e=>this.handleDelete(e,value)} key={'deleteFolderForm'}> <label htmlFor='folder_name'>Choose a Folder to Delete: 
            <br/>
             <select name="folder">
             {value.folders.map((folder)=>{

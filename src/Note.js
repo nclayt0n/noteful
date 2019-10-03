@@ -6,6 +6,7 @@ import NoteBox from './NoteBox'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import config from './config'
+import UpdateNoteButton from './UpdateNoteButton'
 
 function folderName(value,idNum){
   let results;
@@ -46,7 +47,6 @@ class Note extends React.Component {
     return results;
   }
   render(){
-    
     return(
       <Context.Consumer>
       {(value)=>{
@@ -69,6 +69,7 @@ class Note extends React.Component {
   return (
     <article className='noteContainer'> 
       {display}
+      <UpdateNoteButton value={value}/>
     </article>)
 }}</Context.Consumer>
 )}}
