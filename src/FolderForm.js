@@ -1,5 +1,5 @@
 import React from 'react'
-import {withRouter} from 'react-router-dom'
+import {withRouter,Link} from 'react-router-dom'
 import './app.css'
 import config from './config'
 import PropTypes from 'prop-types'
@@ -56,16 +56,20 @@ class FolderForm extends React.Component{
     render(){
         return (
         <Context.Consumer>{(value)=>{
-        return(
+        return(<div>
         <form className="addForm" onSubmit={e=>this.handleSubmit(e,value)}>
             <fieldset>
                 <legend>Create A Folder</legend>
                 <label htmlFor="folderName">Name:
                 <input name="folderName" id="folderName" type="text" aria-required="true" aria-describedby="error" placeholder="Folder Name"/></label><br/>
                 <button type='submit' className="addFolderButton">Add Folder</button>
-            </fieldset>
+               
+            </fieldset> 
+            
             <ValidationError message={this.state.error}/>
-        </form>
+        </form><button className="cancelAddFolderButton">
+                <Link to={'/'}>Cancel</Link>
+            </button></div>
         )}}
     </Context.Consumer>
     )}

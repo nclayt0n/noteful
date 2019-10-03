@@ -106,7 +106,7 @@ validateName=(n)=> {
                 </label>
                 <label htmlFor='content'>Update Note Content: 
                 <br/>
-                <input 
+                <textarea 
                 type='text'
                 name='content'
                 placeholder={note.content}

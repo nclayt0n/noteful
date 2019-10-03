@@ -1,5 +1,5 @@
 import React from 'react'
-import {withRouter} from 'react-router-dom'
+import {withRouter,Link} from 'react-router-dom'
 import Context from './Context'
 import moment from 'moment'
 import config from './config'
@@ -99,12 +99,16 @@ validateName=(n,notes)=> {
             aria-label="New Note Content"  aria-required="true" 
              /></label>
             <ValidationError Contentmessage={this.state.contentError}/>
+            <label htmlFor='folder'>Folder:
             <select name="folder">
             {value.folders.map((folder)=>{
              return(<option name='folder' key={folder.id}>{folder.folder_name}</option>)
             })}
-            </select>
+            </select></label>
             <button type='submit'>Add Note</button>
+            <button className="cancelButton">
+                <Link to={'/'}>Cancel</Link>
+            </button>
         </fieldset>
         </form>
         </div>
