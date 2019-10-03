@@ -56,7 +56,7 @@ class FolderForm extends React.Component{
     render(){
         return (
         <Context.Consumer>{(value)=>{
-        return(<div>
+        return(<div className="folderFormContainer">
         <form className="addForm" onSubmit={e=>this.handleSubmit(e,value)}>
             <fieldset>
                 <legend>Create A Folder</legend>

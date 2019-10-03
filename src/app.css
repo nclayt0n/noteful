@@ -13,6 +13,7 @@
     background-color: var(--gray);
     color: var(--gray);
     font-size: 18px;
+    font-weight: bold;
 }
 
 button {
@@ -27,7 +28,7 @@ h1 {
 }
 
 a {
-    color: black;
+    color: var(--gray);
     cursor: pointer;
 }
 
@@ -126,6 +127,10 @@ main {
     color: var(--gray);
     font-size: 22px;
     padding: 5px;
+    margin: auto;
+}
+
+.folderFormContainer {
     margin: auto;
 }
 
@@ -267,6 +272,7 @@ main {
     padding: 10px;
     border: 1px solid black;
     width: 80%;
+    min-width: 200px;
     text-align: center;
     background-color: var(--steelBlue);
     font-size: 24px;
@@ -301,6 +307,7 @@ main {
     padding: 30px;
     border: 1px solid var(--yellow);
     background-color: var(--steelBlue);
+    margin-bottom: 20px;
 }
 
 .cancelAddFolderButton {
@@ -355,6 +362,7 @@ main {
     background-color: var(--steelBlue);
     padding: 5px;
     text-align: center;
+    font-weight: bold;
 }
 
 .updateNoteOption button {
@@ -427,6 +435,8 @@ main {
 
 .updateFolderOption select {
     display: flex;
+    margin: auto;
+    margin-top: 10px;
 }
 
 .addNoteForm button {
