@@ -69,7 +69,7 @@ class Note extends React.Component {
   return (
     <article className='noteContainer'> 
       {display}
-      <UpdateNoteButton value={value}/>
+      <UpdateNoteButton note={note}/>
     </article>)
 }}</Context.Consumer>
 )}}

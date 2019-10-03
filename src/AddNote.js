@@ -8,8 +8,6 @@ import ValidationError from './ValidationError'
 
 
 function findFolder(value,folder){
-    console.log(value)
-    console.log(folder)
     const folderName=folder;
     const folderId= value.folders.find((f)=>f.folder_name===folderName);
     return folderId.id;
@@ -30,20 +28,23 @@ class AddNote extends React.Component{
         },
         body: JSON.stringify({'note_name':note_name,'date_published':date_published,'folder_id':folder_id,'content':content })
     };
+    
         fetch(url,options)
-        .then(this.context.addNote({note_name,content,folder_id,date_published,}))
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+            throw new Error(response.statusText);
+        })
+        .then(responseJson => this.context.addNote(responseJson))
         .catch(error =>{
             console.log(error)
         })
-        this.setState=({
-            note_name:note_name,
-            date_published:date_published,
-            folder_id:folder_id,
-            content:content
-        });
+       
         this.props.history.push('/')
     }
 validateName=(n,notes)=> {
+    console.log(n,notes)
     let results;
     if ( n===undefined|| n.length === 0 ) {
       results= "Name is required";
@@ -65,17 +66,13 @@ validateName=(n,notes)=> {
   }
    
     handleSubmit=(event,value)=>{
-        console.log(event.target.content.value)
-        console.log(value)
-        console.log(event.target.name.value)
         event.preventDefault();
         let content=event.target.content.value;
         let folder= event.target.folder.value;
         let folder_id=findFolder(value,folder);
         let date_published=moment().format();
         let name=event.target.name.value.toString();
-        
-        if(name.length<3){this.validateName(name,value.notes)} 
+        this.validateName(name,value.notes)
         if(content.length<5){this.validateContent(content)}else{this.callApi(name,date_published,folder_id,content)};
     }
     render(){

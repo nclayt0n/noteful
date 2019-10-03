@@ -16,7 +16,7 @@ class UpdateNote extends React.Component{
         super(props)
         this.state={id:'',content:'',folder_name:'', nameError:'',contentError:''}
     }
-    callApi=(noteId,content,folder_id,updatedName,folder_name)=>{
+    callApi=(noteId,content,folder_id,updatedName,date_published)=>{
         console.log(noteId,content,folder_id,updatedName)
         const url=`${config.API_ENDPOINT}/notes/${noteId}`;
         const options={
@@ -24,18 +24,19 @@ class UpdateNote extends React.Component{
             headers:{
           'content-type':'application/json'
         },
-        body: JSON.stringify({'id':noteId,'folder_id':folder_id,'content':content,'folder_name':updatedName})
+        body: JSON.stringify({'id':noteId,'folder_id':folder_id,'content':content,'date_published':date_published})
     };
+    console.log(options.body);
         fetch(url,options)
-        .then(this.context.UpdateNote({noteId,folder_name,folder_id,content}))
+        .then(this.context.UpdateNote({id:noteId,content,folder_id,note_name:updatedName,date_published}))
         .catch(error =>{
             console.log(error)
         })
         this.setState=({
-            id:noteId,
-            folder_name:updatedName,
+            content:content,
             folder_id:folder_id,
-            content:content
+            note_name:updatedName,
+            date_published,
         });
         this.props.history.push('/')
     }
@@ -58,33 +59,32 @@ validateName=(n)=> {
       }
       this.setState({contentError:results});
   }
-    handleSubmit=(event,value,noteId)=>{
+    handleSubmit=(event,value,noteId,note)=>{
         console.log(this.props)
         event.preventDefault();
-        let updatedName=event.target.newName.value;
-        let content=event.target.content.value;
         let folder_name= event.target.folder.value;
+        let updatedName;
+        updatedName=event.target.newName.value?event.target.newName.value:note.note_name;
+        let content;
+        event.target.content.value?content=event.target.content.value:content=note.content;
+        
         let folder_id=findFolder(value,folder_name);
         console.log(folder_id)
         console.log(folder_name)
         console.log(content)
         console.log(updatedName)
         if(folder_name.length<3){this.validateName(folder_name)} 
-        else{this.callApi(noteId,content,folder_id,updatedName,folder_name)};
+        else{this.callApi(noteId,content,folder_id,updatedName,note.date_published)};
     }
     render(){
         return(
             <Context.Consumer>{(value)=>{
-                let noteId=parseInt(this.props.match.params.noteId)
-                let x=(value.notes[0].id)
-                console.log(x.toString())
-                console.log(noteId)
-                let note=value.notes.find(n=>n.id===noteId)
-                console.log(note)
+                let noteId=parseInt(this.props.match.params.noteId);
+                let note=value.notes.find(n=>n.id===noteId);
                 let folderName=value.folders.find(n=>n.id===note.folder_id) || '';
         return(
         <div className="updateNoteOption">
-            <form action="patch" onSubmit={e=>this.handleSubmit(e,value,noteId)} key={'updateNoteForm'}>
+            <form action="patch" onSubmit={e=>this.handleSubmit(e,value,noteId,note)} key={'updateNoteForm'}>
             <label htmlFor='folder_name'>Move to Folder: 
            <br/>
             <select name="folder"><option name='folder'>{folderName.folder_name}</option>
@@ -110,8 +110,8 @@ validateName=(n)=> {
             aria-label="Updated Note Name"  aria-required="true" 
              />
              </label>
-            <button type='submit'>Update Note</button><button><Link to={'/'}>Cancel</Link></button>
-            </form>
+            <button type='submit'>Update Note</button>
+            </form><button><Link to={'/'}>Cancel</Link></button>
         </div>
 )}}
     </Context.Consumer>
