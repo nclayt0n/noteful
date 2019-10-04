@@ -5,7 +5,7 @@ import config from './config'
 import PropTypes from 'prop-types'
 import ValidationError from './ValidationError'
 import Context from './Context';
-class FolderForm extends React.Component{
+class AddFolder extends React.Component{
     static contextType=Context;
     constructor(props){
         super(props)
@@ -24,15 +24,19 @@ class FolderForm extends React.Component{
         },
         body: JSON.stringify({'folder_name':folder_name})
     };
-        fetch(url,options)
-        .then(this.context.addFolder({folder_name}))
-        .catch(error =>{
-            console.log(error)
-        }) 
-        this.setState({
-            folder_name:folder_name
-        });
-        this.props.history.push('/')
+    fetch(url,options)
+    .then(response => {
+        if (response.ok) {
+            return response.json();
+        }
+        throw new Error(response.statusText);
+    })
+    .then(responseJson => this.context.addFolder(responseJson))
+    .catch(error =>{
+        console.log(error)
+    })
+   
+    this.props.history.push('/')
     }
     handleSubmit(event,value){
         event.preventDefault();
@@ -74,8 +78,8 @@ class FolderForm extends React.Component{
     </Context.Consumer>
     )}
 }
-FolderForm.propTypes={
+AddFolder.propTypes={
     name:PropTypes.string,
     idNum:PropTypes.string
 }
-export default withRouter(FolderForm)
+export default withRouter(AddFolder)

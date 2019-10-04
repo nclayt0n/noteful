@@ -4,7 +4,7 @@ import Context from './Context'
 import ListPage from './ListPage'
 import ActiveFolder from './ActiveFolder'
 import Note from './Note'
-import FolderForm from './FolderForm'
+import AddFolder from './AddFolder'
 import config from './config'
 import AddNote from './AddNote';
 import NoteBox from './NoteBox'
@@ -125,10 +125,10 @@ class App extends React.Component {
                 }
             }
             />  
-            <Route path = '/folderForm'
+            <Route path = '/add-folder'
             render = {
                 ({ history }) => {
-                    return <FolderForm
+                    return <AddFolder
                     callApi = {
                         () => history.push('/')
                     }
