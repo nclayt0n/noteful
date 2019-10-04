@@ -24,7 +24,8 @@ class AddNote extends React.Component{
         const options={
             method:'POST',
             headers:{
-          'content-type':'application/json'
+          'content-type':'application/json',
+          'Authorization':`Bearer ${config.API_TOKEN}`,
         },
         body: JSON.stringify({'note_name':note_name,'date_published':date_published,'folder_id':folder_id,'content':content })
     };
@@ -50,7 +51,10 @@ validateName=(n,notes)=> {
       results= "Name is required";
     } else if (n.length < 3) {
       results= "Name must be at least 3 characters long.";
-    }else if(notes.find(note=>n===note.note_name)){
+    }else if(notes.find(note=>{
+        console.log(n,note.note_name)
+        return n===note.note_name})){
+    
         results="Note name already taken"
     }
     this.setState({nameError:results});
@@ -68,15 +72,15 @@ validateName=(n,notes)=> {
     handleSubmit=(event,value)=>{
         event.preventDefault();
         let content=event.target.content.value;
-        console.log(content)
         let folder;
          event.target.folder.value?folder=event.target.folder.value:folder=value.folders.folder_name[0];
-         console.log(folder)
         let folder_id=findFolder(value,folder);
         let date_published=moment().format();
         let name=event.target.name.value.toString();
-        this.validateName(name,value.notes)
-        if(content.length<5){this.validateContent(content)}else{this.callApi(name,date_published,folder_id,content)};
+        if(name.length>1){this.validateName(name,value.notes,content)}
+        if(content.length<5){this.validateContent(content)
+        }else{
+            this.callApi(name,date_published,folder_id,content)};
     }
     render(){
         return(
@@ -91,7 +95,7 @@ validateName=(n,notes)=> {
             type='text' 
             name='name' 
             aria-label="New Note Name"  aria-required="true"/></label> 
-            <ValidationError Namemessage={this.state.nameError} />
+            <ValidationError Namemessage={this.state.nameError} Contentmessage={this.state.contentError}/>
             <label htmlFor='content'>Content:
             <textarea
             type='text'

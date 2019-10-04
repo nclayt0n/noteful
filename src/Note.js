@@ -32,7 +32,8 @@ class Note extends React.Component {
     const options = {
      method: 'DELETE',
         headers:{
-          'content-type':'application/json'
+          'content-type':'application/json',
+          'Authorization': `Bearer ${config.API_TOKEN}`,
         },
     };
     fetch(url,options)

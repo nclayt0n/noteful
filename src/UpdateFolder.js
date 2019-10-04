@@ -42,7 +42,8 @@ class UpdateFolder extends React.Component{
         const options={
             method:actionWord,
             headers:{
-          'content-type':'application/json'
+          'content-type':'application/json',
+          'Authorization':`Bearer ${config.API_TOKEN}`,
         },
         body: JSON.stringify({'id':folder_id})
     };

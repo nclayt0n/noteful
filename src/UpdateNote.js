@@ -22,7 +22,8 @@ class UpdateNote extends React.Component{
         const options={
             method:'PATCH',
             headers:{
-          'content-type':'application/json'
+          'content-type':'application/json',
+          'Authorization': `Bearer ${config.API_TOKEN}`,
         },
         body: JSON.stringify({'id':noteId,'folder_id':folder_id,'content':content,'date_published':date_published})
     };

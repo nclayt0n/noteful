@@ -22,9 +22,18 @@ class App extends React.Component {
         }
     }
     componentDidMount() {
+        const options = {
+            method: 'GET',
+            headers: {
+                'content-type': 'application/json',
+                'Authorization': `Bearer ${config.API_TOKEN}`,
+            },
+        };
         Promise.all([
-                fetch(`${config.API_ENDPOINT}/notes`),
-                fetch(`${config.API_ENDPOINT}/folders`)
+                fetch(`${config.API_ENDPOINT}/notes`,
+          options),
+                fetch(`${config.API_ENDPOINT}/folders`,
+          options)
             ])
             .then(([notesRes, foldersRes]) => {
                 if (!notesRes.ok)
@@ -61,7 +70,8 @@ class App extends React.Component {
         const options = {
             method: 'DELETE',
             headers: {
-                'content-type': 'application/json'
+                'content-type': 'application/json',
+          'Authorization':`Bearer ${config.API_TOKEN}`,
             },
         };
         fetch(url, options)

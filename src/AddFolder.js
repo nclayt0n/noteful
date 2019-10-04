@@ -16,11 +16,13 @@ class AddFolder extends React.Component{
     }
     callApi=(folder_name)=>{
         console.log(folder_name);
+        console.log(config)
         const url=`${config.API_ENDPOINT}/folders`;
         const options={
             method:'POST',
             headers:{
-          'content-type':'application/json'
+          'content-type':'application/json',
+          'Authorization':`Bearer ${config.API_TOKEN}`,
         },
         body: JSON.stringify({'folder_name':folder_name})
     };
