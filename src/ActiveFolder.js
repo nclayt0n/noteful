@@ -11,7 +11,8 @@ import UpdateFolderButton from './UpdateFolderButton'
 class ActiveFolder extends React.Component {
   static contextType=Context;
   selectedFolder=(folderId)=>{
-  let style;(folderId.toString()===this.props.match.params.foldersId) ? style={backgroundColor:'#C8923B'}:style=null
+  let style;
+  (folderId.toString()===this.props.match.params.foldersId) ? style={backgroundColor:'#C8923B'}:style=null
     return style;
   }
   render(){
