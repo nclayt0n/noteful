@@ -56,15 +56,16 @@ class Note extends React.Component {
     return n.id.toString()===this.props.match.params.notesId});
   const { note_name,content, folder_id}=note;
   let display=
-  <>
+  <> 
       <ul className='notesList'>
       <NoteBox value={value} item={note} prop={this.props}/>
       </ul>
-        <button className="singleFolder" onClick={this.handleGoBack}>{folderName(value,folder_id)} </button>
+       
         <div className='noteContent'>
           <h2>{note_name}</h2>
           <p>{content}</p>
         </div>
+        <button className="singleFolder" onClick={this.handleGoBack}>{folderName(value,folder_id)} </button>
         </>;
   return (
     <article className='noteContainer'> 

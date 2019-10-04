@@ -85,6 +85,7 @@ main {
     font-weight: bold;
     margin: auto;
     width: 50%;
+    min-width: 140px;
 }
 
 .addForm {
@@ -151,8 +152,10 @@ main {
 }
 
 .notesList li {
+    margin: auto;
     background-color: var(--steelBlue);
     border: 1px solid var(--brown);
+    margin-bottom: 15px;
 }
 
 .noteInfo a,
@@ -253,12 +256,13 @@ main {
     margin: auto;
     margin-bottom: 15px;
     border-bottom: 1px solid black;
-    width: fit-content;
+    width: 80%;
     padding: 15px;
     color: var(--gray);
     background-color: var(--yellow);
     font-weight: bold;
     border: 1px solid var(--yellow);
+    justify-content: center;
 }
 
 .noNote {
