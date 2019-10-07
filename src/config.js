@@ -1,4 +1,5 @@
 module.exports = {
-    API_ENDPOINT: "http://localhost:3000/api",
-    API_TOKEN: "013341e4-e63d-11e9-81b4-2a2ae2dbcce4",
+    API_ENDPOINT: process.env.REACT_APP_API_ENDPOINT,
+    API_TOKEN: process.env.REACT_APP_API_TOKEN
+
 }
