@@ -17,7 +17,7 @@ class AddNote extends React.Component{
     static contextType=Context;
     constructor(props){
         super(props)
-        this.state={id:"",name:"",modified:"",folderId:"",content:"",nameError:"",contentError:"",error:""}
+        this.state={id:"",name:"",modified:"",folderId:"",content:"",nameError:"",contentError:"",error:"",folderError:""}
     }
     callApi=(note_name,date_published,folder_id,content)=>{
         const url=`${config.API_ENDPOINT}/notes`;
@@ -52,7 +52,6 @@ validateName=(n,notes)=> {
       results= "Name must be at least 3 characters long.";
     }else if(notes.find(note=>{
         return n===note.note_name})){
-    
         results="Note name already taken"
     }
     this.setState({nameError:results});
@@ -70,15 +69,33 @@ validateName=(n,notes)=> {
     handleSubmit=(event,value)=>{
         event.preventDefault();
         let content=event.target.content.value;
-        let folder;
-         event.target.folder.value?folder=event.target.folder.value:folder=value.folders.folder_name[0];
-        let folder_id=findFolder(value,folder);
-        let date_published=moment().format();
         let name=event.target.name.value.toString();
-    
-        this.callApi(name,date_published,folder_id,content)
-        
-    }
+        let folder;
+         event.target.folder.value?folder=event.target.folder.value:this.setState({folderError:"Must select a folder"});
+         let date_published=moment().format();
+         if(folder===undefined){
+             this.props.history.push(`/addNote/${this.props.match.params.folderId}`)
+         }
+         if(name.length<3){
+             this.validateName(name)
+         }
+         if(name.length>=3){
+             this.setState({nameError:""})
+         }
+         if(content.length<5){
+             this.validateContent(content)
+         }
+         if(content.length>=5){
+             this.setState({contentError:""})
+         }
+         if(folder !== undefined){
+             this.setState({folderError:""})
+         }
+         if(folder!==undefined && content.length>=5 && name.length>3){
+        let folder_id=findFolder(value,folder);
+        this.callApi(name,date_published,folder_id,content);
+        }
+}
     render(){
         return(
     <Context.Consumer>{(value)=>{
@@ -109,6 +126,7 @@ validateName=(n,notes)=> {
              return(<option name="folder" key={folder.id}>{folder.folder_name}</option>)
             })}
             </select></label>
+            <ValidationError message={this.state.folderError} />
             <button type='submit'>Add Note</button>
             <button className="cancelButton">
                 <Link to={'/'}>Cancel</Link>
