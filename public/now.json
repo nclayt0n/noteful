@@ -1,6 +1,8 @@
 {
     "version": 2,
-    "name": "bookmarks-app",
+    "name": "noteful-app",
+    "alias": "noteful-app-19",
+
     "routes": [{
             "src": "^/static/(.*)",
             "dest": "/static/$1"

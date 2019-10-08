@@ -52,14 +52,11 @@ class App extends React.Component {
 
     }
     handleUpdateNote=note=>{
-        console.log(this.state)
-        console.log(note)
         this.setState({
             notes: [...this.state.notes.filter(n => n.id !== note.id),note]
         })
     }
     handleUpdateFolder=folder=>{
-        console.log(folder)
        this.setState({
         folders: [...this.state.folders.filter(f => f.id !== folder.folder_id),folder]
     });
@@ -85,11 +82,9 @@ class App extends React.Component {
         });
     };
     handleAddNote = (note) => {
-        console.log(note)
         this.setState({
             notes: [...this.state.notes, note]
         })
-        console.log(this.state)
     }
     handleAddFolder = (folder) => {
         this.setState({
@@ -102,7 +97,6 @@ class App extends React.Component {
         });
 }
     render() {
-        console.log(this.state)
         const contextValue = {
             folders: this.state.folders,
             notes: this.state.notes,

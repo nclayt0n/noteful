@@ -14,10 +14,9 @@ class UpdateNote extends React.Component{
     static contextType=Context;
     constructor(props){
         super(props)
-        this.state={id:'',content:'',folder_name:'', nameError:'',contentError:''}
+        this.state={id:'',content:'',folder_name:'', nameError:'',contentError:'',error:''}
     }
     callApi=(noteId,content,folder_id,updatedName,date_published)=>{
-        console.log(noteId,content,folder_id,updatedName)
         const url=`${config.API_ENDPOINT}/notes/${noteId}`;
         const options={
             method:'PATCH',
@@ -27,11 +26,10 @@ class UpdateNote extends React.Component{
         },
         body: JSON.stringify({'id':noteId,'folder_id':folder_id,'content':content,'date_published':date_published})
     };
-    console.log(options.body);
         fetch(url,options)
         .then(this.context.UpdateNote({id:noteId,content,folder_id,note_name:updatedName,date_published}))
         .catch(error =>{
-            console.log(error)
+            this.setState({error})
         })
         this.setState=({
             content:content,
@@ -61,7 +59,6 @@ validateName=(n)=> {
       this.setState({contentError:results});
   }
     handleSubmit=(event,value,noteId,note)=>{
-        console.log(this.props)
         event.preventDefault();
         let folder_name= event.target.folder.value;
         let updatedName;

@@ -14,10 +14,9 @@ class UpdateFolder extends React.Component{
     static contextType=Context;
     constructor(props){
         super(props)
-        this.state={id:'',folder_name:'', nameError:'',contentError:''}
+        this.state={id:'',folder_name:'', nameError:'',contentError:'',error:''}
     }
     callApi=(folder_name,folder_id,actionWord)=>{
-        console.log(folder_name)
         const url=`${config.API_ENDPOINT}/folders/${folder_id}`;
         const options={
             method:actionWord,
@@ -29,7 +28,7 @@ class UpdateFolder extends React.Component{
         fetch(url,options)
         .then(this.context.updateFolder({folder_name,folder_id}))
         .catch(error =>{
-            console.log(error)
+            this.setState({error})
         })
         this.setState=({
             folder_name:folder_name,
@@ -50,7 +49,7 @@ class UpdateFolder extends React.Component{
         fetch(url,options)
         .then(this.context.deleteFolder(folder_id))
         .catch(error =>{
-            console.log(error)
+            this.setState({error})
         })
         this.setState=({
             folder_id:folder_id,

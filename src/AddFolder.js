@@ -15,8 +15,6 @@ class AddFolder extends React.Component{
         }
     }
     callApi=(folder_name)=>{
-        console.log(folder_name);
-        console.log(config)
         const url=`${config.API_ENDPOINT}/folders`;
         const options={
             method:'POST',
@@ -47,8 +45,6 @@ class AddFolder extends React.Component{
     }
     validateName=(folder_name,folders)=> {
         let results;
-        console.log('ive been called')
-        console.log(folder_name)
     if (folder_name===undefined ||folder_name.length === 0) {
       results= "Name is required";
     }else if (folder_name.length < 3) {

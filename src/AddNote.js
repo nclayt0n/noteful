@@ -17,7 +17,7 @@ class AddNote extends React.Component{
     static contextType=Context;
     constructor(props){
         super(props)
-        this.state={id:'',name:'',modified:'',folderId:'',content:'',nameError:'',contentError:''}
+        this.state={id:'',name:'',modified:'',folderId:'',content:'',nameError:'',contentError:'',error:""}
     }
     callApi=(note_name,date_published,folder_id,content)=>{
         const url=`${config.API_ENDPOINT}/notes`;
@@ -39,20 +39,18 @@ class AddNote extends React.Component{
         })
         .then(responseJson => this.context.addNote(responseJson))
         .catch(error =>{
-            console.log(error)
+            this.setState({error})
         })
        
         this.props.history.push('/')
     }
 validateName=(n,notes)=> {
-    console.log(n,notes)
     let results;
     if ( n===undefined|| n.length === 0 ) {
       results= "Name is required";
     } else if (n.length < 3) {
       results= "Name must be at least 3 characters long.";
     }else if(notes.find(note=>{
-        console.log(n,note.note_name)
         return n===note.note_name})){
     
         results="Note name already taken"
