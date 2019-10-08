@@ -13,13 +13,29 @@ import NoteBox from './NoteBox';
      folder:[],
      notes:[]
    }
+   dynamicSort=(property)=>{
+    var sortOrder = 1;
+
+    if(property[0] === "-") {
+        sortOrder = -1;
+        property = property.substr(1);
+    }
+
+    return function (a,b) {
+        if(sortOrder == -1){
+            return b[property].localeCompare(a[property]);
+        }else{
+            return a[property].localeCompare(b[property]);
+        }        
+    }
+}
     render(){
         return(
           <Context.Consumer>{(value)=>{
             return(
             <div className='container'>
       <ul className='folderList'>
-        {value.folders.map((folder)=>{
+        {value.folders.sort(this.dynamicSort("folder_name")).map((folder)=>{
           return(<li key={folder.id}>
             <Link to={`/folders/${folder.id}`}>
             {folder.folder_name}
@@ -30,7 +46,7 @@ import NoteBox from './NoteBox';
         
       </ul>
       <ul className='notesList'>
-      {value.notes.map(item=>{
+      {value.notes.sort(this.dynamicSort("note_name")).map(item=>{
         return (<NoteBox key={item.id} value={value} item={item} prop={this.props}/>)})}
         <NoteButton/>
       </ul>
