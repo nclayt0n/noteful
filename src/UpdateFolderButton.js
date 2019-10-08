@@ -4,7 +4,7 @@ export default class UpdateFolderButton extends React.Component{
     render(){
         return(
         <div className="updateFolderButton">
-        <Link to={`/update-folder`}>Update Folder</Link>
+        <Link to={`/update-folder/${parseInt(this.props.folder)}`}>Update Folder</Link>
         </div>)
     }
 }

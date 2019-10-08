@@ -21,18 +21,19 @@ class UpdateFolder extends React.Component{
         const options={
             method:actionWord,
             headers:{
-          'content-type':'application/json'
+          'content-type':'application/json','Authorization':`Bearer ${config.API_TOKEN}`,
         },
-        body: JSON.stringify({'folder_name':folder_name,'folder_id':folder_id})
+        body: JSON.stringify({'id':folder_id,'folder_name':folder_name})
     };
         fetch(url,options)
-        .then(this.context.updateFolder({folder_name,folder_id}))
+        .then(this.context.updateFolder({id:folder_id,folder_name,}))
         .catch(error =>{
             this.setState({error})
         })
         this.setState=({
+            id:folder_id,
             folder_name:folder_name,
-            folder_id:folder_id,
+            
         });
         this.props.history.push('/')
     }
@@ -90,13 +91,17 @@ validateName=(n,folders)=> {
     render(){
         return(
             <Context.Consumer>{(value)=>{
+                  let folderId=parseInt(this.props.match.params.folderId)
+                let folder=value.folders.find(f=>f.id===folderId) || '';
         return(
         <div className="updateFolderOption">
             <form action="patch" onSubmit={e=>this.handleSubmit(e,value)} key={'updateFolderForm'}>
             <label htmlFor='folder_name'>Choose a Folder to Alter: 
            <br/>
             <select name="folder">
-            {value.folders.map((folder)=>{
+            <option name='folder'>{folder.folder_name}
+                    </option>
+            {value.folders.filter(f=>f.id!==folderId).map((folder)=>{
              return(<option name="folder" key={folder.id}>{folder.folder_name}</option>)
             })}
             </select></label> 
@@ -105,6 +110,7 @@ validateName=(n,folders)=> {
             <input 
             type='text'
             name='name'
+            placeholder={folder.folder_name}
             aria-label="Updated Folder Name"  aria-required="true" 
              /></label>
             <button type='submit'>Submit New Name</button>
@@ -112,7 +118,8 @@ validateName=(n,folders)=> {
             <form action="delete" onSubmit={e=>this.handleDelete(e,value)} key={'deleteFolderForm'}> <label htmlFor='folder_name'>Choose a Folder to Delete: 
            <br/>
             <select name="folder">
-            {value.folders.map((folder)=>{
+            <option name='folder'>{folder.folder_name}</option>
+            {value.folders.filter(f=>f.id!==folderId).map((folder)=>{
              return(<option name="folder" key={folder.id}>{folder.folder_name}</option>)
             })}
             </select></label> <button type='submit' onClick={this.deleteFolder}>Delete Folder</button><button><Link to={'/'}>Cancel</Link></button></form>

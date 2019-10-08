@@ -98,7 +98,7 @@ validateName=(n)=> {
                 <input 
                 type='text'
                 name='newName'
-                placeholder={note.note_name}
+                value={note.note_name}
                 aria-label="Updated Note Name"  aria-required="true" 
                 />
                 </label>
@@ -107,8 +107,8 @@ validateName=(n)=> {
                 <textarea 
                 type='text'
                 name='content'
-                placeholder={note.content}
                 aria-label="Updated Note Name"  aria-required="true" 
+                value={note.content}
                 />
                 </label>
                 <button className="updateButton"type='submit'>Update Note</button>

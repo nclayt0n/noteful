@@ -17,7 +17,7 @@ class AddNote extends React.Component{
     static contextType=Context;
     constructor(props){
         super(props)
-        this.state={id:'',name:'',modified:'',folderId:'',content:'',nameError:'',contentError:'',error:""}
+        this.state={id:"",name:"",modified:"",folderId:"",content:"",nameError:"",contentError:"",error:""}
     }
     callApi=(note_name,date_published,folder_id,content)=>{
         const url=`${config.API_ENDPOINT}/notes`;
@@ -75,14 +75,15 @@ validateName=(n,notes)=> {
         let folder_id=findFolder(value,folder);
         let date_published=moment().format();
         let name=event.target.name.value.toString();
-        if(name.length>1){this.validateName(name,value.notes,content)}
-        if(content.length<5){this.validateContent(content)
-        }else{
-            this.callApi(name,date_published,folder_id,content)};
+    
+        this.callApi(name,date_published,folder_id,content)
+        
     }
     render(){
         return(
     <Context.Consumer>{(value)=>{
+         let folderId=parseInt(this.props.match.params.folderId)
+                let folder=value.folders.find(f=>f.id===folderId) || '';
         return(
             <div className="addNoteForm">
         <form onSubmit={e=>this.handleSubmit(e,value)} key={'addNoteForm'}>
@@ -93,18 +94,19 @@ validateName=(n,notes)=> {
             type='text' 
             name='name' 
             aria-label="New Note Name"  aria-required="true"/></label> 
-            <ValidationError Namemessage={this.state.nameError} Contentmessage={this.state.contentError}/>
+            <ValidationError Namemessage={this.state.nameError} />
             <label htmlFor='content'>Content:
             <textarea
             type='text'
             name='content'
-            aria-label="New Note Content"  aria-required="true" 
+            aria-label="New Note Content"  
              /></label>
             <ValidationError Contentmessage={this.state.contentError}/>
             <label htmlFor='folder'>Folder:
             <select name="folder">
-            {value.folders.map((folder)=>{
-             return(<option name='folder' key={folder.id}>{folder.folder_name}</option>)
+            <option name='folder'>{folder.folder_name}</option>
+            {value.folders.filter(f=>f.id!==folderId).map((folder)=>{
+             return(<option name="folder" key={folder.id}>{folder.folder_name}</option>)
             })}
             </select></label>
             <button type='submit'>Add Note</button>

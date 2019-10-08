@@ -58,7 +58,7 @@ class App extends React.Component {
     }
     handleUpdateFolder=folder=>{
        this.setState({
-        folders: [...this.state.folders.filter(f => f.id !== folder.folder_id),folder]
+        folders: [...this.state.folders.filter(f => f.id !== folder.id),folder]
     });
 };
     
@@ -140,7 +140,7 @@ class App extends React.Component {
                 }
             }
             /> 
-            <Route path = '/addNote'
+            <Route path = '/addNote/:folderId'
             render = {
                 ({ history }) => {
                     return <AddNote
@@ -160,7 +160,7 @@ class App extends React.Component {
                 }
             }
             /> 
-            <Route path='/update-folder'
+            <Route path='/update-folder/:folderId'
             component={UpdateFolder}/>
             <Route path='/update-note/:noteId' component={UpdateNote}/>
             <NotFoundPage/>

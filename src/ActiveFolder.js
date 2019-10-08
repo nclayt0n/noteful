@@ -30,13 +30,14 @@ class ActiveFolder extends React.Component {
             </Link>
           </li>)
       })}
-      <FolderButton/>
+      <FolderButton />
       </ul>
       <ul className="notesList">
         {folder.map(item=>{
         return <NoteBox key={item.id}value={value} item={item} prop={this.props}/>})}
-      <NoteButton/>
-      <UpdateFolderButton/>
+      <NoteButton folder={this.props.match.params.foldersId}/>
+      
+      <UpdateFolderButton folder={this.props.match.params.foldersId}/>
       </ul>
       
     </div>
