@@ -96,15 +96,14 @@ validateName=(n,folders)=> {
         return(
         <div className="updateFolderOption">
             <form action="patch" onSubmit={e=>this.handleSubmit(e,value)} key={'updateFolderForm'}>
-            <label htmlFor='folder_name'>Choose a Folder to Alter: 
+            <label htmlFor='folder_name'>Choose a Folder to Alter: </label> 
            <br/>
             <select name="folder">
-            <option name='folder'>{folder.folder_name}
-                    </option>
+            <option name='folder'>{folder.folder_name}</option>
             {value.folders.filter(f=>f.id!==folderId).map((folder)=>{
              return(<option name="folder" key={folder.id}>{folder.folder_name}</option>)
             })}
-            </select></label> 
+            </select>
             <label htmlFor='name'>Update Folder Name: 
            <br/>
             <input 
@@ -115,14 +114,15 @@ validateName=(n,folders)=> {
              /></label>
             <button type='submit'>Submit New Name</button>
             </form>
-            <form action="delete" onSubmit={e=>this.handleDelete(e,value)} key={'deleteFolderForm'}> <label htmlFor='folder_name'>Choose a Folder to Delete: 
+            <form action="delete" onSubmit={e=>this.handleDelete(e,value)} key={'deleteFolderForm'}> <label htmlFor='folder_name'>Choose a Folder to Delete:</label>  
            <br/>
             <select name="folder">
             <option name='folder'>{folder.folder_name}</option>
             {value.folders.filter(f=>f.id!==folderId).map((folder)=>{
              return(<option name="folder" key={folder.id}>{folder.folder_name}</option>)
             })}
-            </select></label> <button type='submit' onClick={this.deleteFolder}>Delete Folder</button><button><Link to={'/'}>Cancel</Link></button></form>
+            </select>
+            <button type='submit' onClick={this.deleteFolder}>Delete Folder</button><button><Link to={'/'}>Cancel</Link></button></form>
         </div>
 )}}
     </Context.Consumer>

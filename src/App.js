@@ -125,41 +125,27 @@ class App extends React.Component {
                 ({ history }) => {
                     return <Note
                     handleClickDelete = {
-                        () => history.push('/')}/>
-                }
-            }
-            />  
+                        () => history.push('/')}/>}}/>  
             <Route path = '/add-folder'
             render = {
                 ({ history }) => {
                     return <AddFolder
                     callApi = {
                         () => history.push('/')
-                    }
-                    />
-                }
-            }
-            /> 
+                    }/>}}/> 
             <Route path = '/addNote/:folderId'
             render = {
                 ({ history }) => {
                     return <AddNote
                     handleSubmit = {
-                        () => history.push('/')}/>
-                }
-            }
-            /> 
+                        () => history.push('/')}/>}}/> 
             <Route path = '/noteBox'
             render = {
                 ({ history }) => {
                     return <NoteBox
                     handleClickDelete = {
                         () => history.push('/')
-                    }
-                    />
-                }
-            }
-            /> 
+            }/>}}/> 
             <Route path='/update-folder/:folderId'
             component={UpdateFolder}/>
             <Route path='/update-note/:noteId' component={UpdateNote}/>
